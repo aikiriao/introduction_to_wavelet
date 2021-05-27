@@ -1,0 +1,126 @@
+%栞の文字化け防止
+\AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}
+%\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+%ページ番号の表示
+\setbeamertemplate{footline}[frame number]
+%ナビゲーションバーの表示
+%\useoutertheme[subsection=false]{smoothbars}
+%\usepackage[dvipdfm,bookmarks=true,%
+%bookmarksnumbered=true,bookmarkstype=toc]{hyperref}
+%\ifnum 42146=\euc"A4A2 \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}\else
+%\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}\fi
+%ナビゲーションバーの非表示
+\setbeamertemplate{navigation symbols}{}
+ 
+%%%%%%%%%%%  numbering  %%%%%%%%%%%
+%\setbeamertemplate{numbered}
+\setbeamertemplate{caption}[numbered]
+
+%数式をゴシックで表示させない
+\usefonttheme[onlymath]{serif}
+
+%\usepackage[bookmarks=true]{hyperref}
+
+%%%%%%%%%%%  package  %%%%%%%%%%%
+\usepackage{amssymb,amsmath,ascmac}
+\usepackage{graphicx}
+\usepackage{multimedia}
+\usepackage{lmodern}
+\usepackage{exscale}
+
+%%%% 定義環境 %%%%%
+\theoremstyle{definition}
+\newtheorem{Thm}{Theorem}[]
+\newtheorem{Def}{Definition}[]
+%\newtheorem{Pro}{Proposition}
+%\newtheorem{Lem}{Lemma}
+%\newtheorem{Cor}{Corollary}
+%\newtheorem{Con}{Conjecture}
+%\newtheorem*{Rem}{Remark}
+%\renewcommand{\proofname}{}
+
+%\setbeamertemplate{theorems}[ams style]
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block title}{fg=white,bg=structure}
+\setbeamercolor{block body}{bg=blue!10}
+
+%%%%%%%%%%%  theme  %%%%%%%%%%%
+%\usetheme{Madrid}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Barkeley}
+%\usetheme{Bergen}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+\usetheme{default}
+%\usetheme{Dreson}
+%\usetheme{Dresden}
+%\usetheme{Frankurt}
+%\usetheme{Goettingen}
+%\usetheme{Hanover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+%%%%%%%%%%%  inner theme  %%%%%%%%%%%
+\useinnertheme{default}
+%\useinnertheme{circles}
+%\useinnertheme{inmargin}
+%\useinnertheme{rectangles}
+%\useinnertheme{rounded}
+
+%%%%%%%%%%%  outer theme  %%%%%%%%%%%
+\useoutertheme{default}
+%\useoutertheme{miniframes}
+%\useoutertheme{infolines}
+%\useoutertheme{miniframes}
+%\useoutertheme{smoothbars}
+%\useoutertheme{sidebars}
+%\useoutertheme{split}
+%\useoutertheme{shadow}
+%\useoutertheme{tree}
+%\useoutertheme{smoothtree}
+
+%%%%%%%%%%%  color theme  %%%%%%%%%%%
+%\usecolortheme{default}
+%\usecolortheme{structure}
+%\usecolortheme{sidebartab}
+%\usecolortheme{albatross}
+%\usecolortheme{beetle}
+%\usecolortheme{dove}
+%\usecolortheme{crane}
+%\usecolortheme{fly}
+%\usecolortheme{seagull}
+%\usecolortheme{wolverine}
+\usecolortheme{beaver}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{whale}
+%\usecolortheme{seahorse}
+%\usecolortheme{dolphin}
+
+%%%%%%%%%%%  font theme  %%%%%%%%%%%
+%\usefonttheme{professionalfonts}
+%\usefonttheme{default}
+%\usefonttheme{serif}
+\usefonttheme{structurebold}
+%\usefonttheme{structureserif}
+%\usefonttheme{structuresmallcapsserif}
+
+%%%%%%%%%%%  degree of transparency  %%%%%%%%%%%
+%\setbeamercovered{transparent=30}
+

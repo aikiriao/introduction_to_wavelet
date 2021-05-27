@@ -1,0 +1,65 @@
+%数学系フォントのプリアンブル集
+
+%数式を表示するためのパッケージ
+% \usepackage{amsmath,amssymb,ascmac}
+\usepackage{type1cm}
+\usepackage{mathtools} 
+%定理や定義
+\usepackage{cancel}
+\usepackage{centernot}
+\usepackage{latexsym}
+% \usepackage{amssymb}
+
+%行列の表記を斜体にする
+\newcommand{\bvec}[1]{\mbox{\boldmath $#1$}}
+
+%転置行列の一番美しい表示
+\newcommand{\tvec}[1]{\bvec{#1}^{\mathsf{T}}}
+
+%ベクトル関係
+\newcommand{\ve}[1]{\boldsymbol{#1}}	%ベクトル
+\newcommand{\inpro}[2]{{\left\langle #1 , #2 \right\rangle}} % 内積
+
+%積分
+\newcommand{\dint}[2]{\int\!\!\!\int_{#1} #2 }	%二重積分
+\newcommand{\tint}[2]{\int\!\!\!\int\!\!\!\int_{#1} #2 }	%三重積分
+
+%次数を指定した微分
+\newcommand{\dif}[3]{\frac{d^{#1}#2}{d #3^{#1}}}
+\newcommand{\pard}[3]{\frac{\partial^{#1}#2}{\partial #3^{#1}}}
+
+%全微分
+\newcommand{\difrac}[2]{{\frac{d #1}{d #2}}}	% 微分
+
+%偏微分
+\newcommand{\parfrac}[2]{{\frac{\partial #1}{\partial #2}}}	%偏微分
+\newcommand{\tparfrac}[2]{{\tfrac{\partial #1}{\partial #2}}}	%偏微分（常にテキスト環境での分数）
+
+%ベクトル微分
+\newcommand{\Div}{{\rm div}}
+\newcommand{\Rot}{{\rm rot}}
+\newcommand{\Curl}{{\rm curl}}
+
+%内積
+\newcommand{\innprod}[2]{\langle #1, #2 \rangle}
+
+%関数のローマン体表示
+\def\diag{\mathop{\rm diag}\nolimits}
+\def\sign{\mathop{\rm sign}\nolimits}
+\def\sgn{\mathop{\rm sgn}\nolimits}
+
+%論理関係
+\usepackage{cancel}
+
+%その他表記関係
+\newcommand{\n}{\ \\}	% 強制改行
+\newcommand{\cm}{{\  , \ }}	% すこし間隔の空いたカンマ
+
+%平均オペレータ
+\newcommand{\Mean}[2]{\mathrm{E}_{#1} \left[ #2 \right]}
+\newcommand{\KLdiv}[2]{\mathrm{KL}\left[ #1 || #2 \right]}
+
+%ノルム
+\newcommand{\norm}[2]{||#1||_{#2}}
+% トレース
+\newcommand{\Tr}[1]{\mathrm{tr}\left[ #1 \right]}
