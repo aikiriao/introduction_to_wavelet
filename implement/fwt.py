@@ -4,10 +4,13 @@ from scipy.ndimage import correlate1d
 from scipy.ndimage import convolve1d
 
 # スケーリング係数
-HAAR_SCALING_COEF = [0.707106781186547, 0.707106781186547] 
+HAAR_SCALING_COEF = [0.707106781186547, 0.707106781186547]
 DAUBECHIES2_SCALING_COEF = [0.482962913145, 0.836516303738, 0.224143868042, -0.129409522551]
-DAUBECHIES3_SCALING_COEF = [0.332670552950, 0.806891509311, 0.459877502118, -0.135011020010, -0.085441273882, 0.035226291882]
-DAUBECHIES4_SCALING_COEF  = [0.230377813309, 0.714846570553, 0.630880767930, -0.027983769417, -0.187034811719, 0.030841381836, 0.032883011667, -0.010597401785]
+DAUBECHIES3_SCALING_COEF = [0.332670552950, 0.806891509311,\
+        0.459877502118, -0.135011020010, -0.085441273882, 0.035226291882]
+DAUBECHIES4_SCALING_COEF  = [0.230377813309, 0.714846570553,\
+        0.630880767930, -0.027983769417, -0.187034811719,\
+        0.030841381836, 0.032883011667, -0.010597401785]
 
 def _roundup_power_of_two(integer):
     """ 入力整数を2の冪数(2, 4, 8, 16, ...)に切り上げる """
@@ -23,12 +26,12 @@ def _minmax_scale(vec, maxscale):
     return maxscale * div
 
 
-def calculate_wavelet_coef(scaling_coef):
+def calculate_wavelet_coef(scaling_coefficients):
     """ ウェーブレット係数からスケーリング係数を生成 """
-    wavelet_coef = scaling_coef[::-1].copy() # 順序逆の配列
-    for n in range(len(scaling_coef)):
-        wavelet_coef[n] *= ((-1) ** n)
-    return wavelet_coef
+    wavelet_coefficients = scaling_coefficients[::-1].copy() # 順序逆の配列
+    for i in range(len(scaling_coefficients)):
+        wavelet_coefficients[i] *= ((-1) ** i)
+    return wavelet_coefficients
 
 
 def fwt1d(src, scaling_coef):
@@ -78,17 +81,17 @@ def fwt2d(src2d, scaling_coef):
     src2d_h = np.zeros((src_len, half_src_len))
     # src2dを低域（左）と高域（右）に分解
     for j in range(src_len):
-        sl, sh = fwt1d(src2d[j, :], scaling_coef)
-        src2d_l[j, :] = sl
-        src2d_h[j, :] = sh
+        src_l, src_h = fwt1d(src2d[j, :], scaling_coef)
+        src2d_l[j, :] = src_l
+        src2d_h[j, :] = src_h
     # src2d_l, src2d_hを更に左上(ll)、左下(hl)、右上(lh)、右下(hh)に分割
     for j in range(half_src_len):
-        sl, sh = fwt1d(src2d_l[:, j], scaling_coef)
-        src2d_ll[:, j] = sl
-        src2d_hl[:, j] = sh
-        sl, sh = fwt1d(src2d_h[:, j], scaling_coef)
-        src2d_lh[:, j] = sl
-        src2d_hh[:, j] = sh
+        src_l, src_h = fwt1d(src2d_l[:, j], scaling_coef)
+        src2d_ll[:, j] = src_l
+        src2d_hl[:, j] = src_h
+        src_l, src_h = fwt1d(src2d_h[:, j], scaling_coef)
+        src2d_lh[:, j] = src_l
+        src2d_hh[:, j] = src_h
     return [src2d_ll, src2d_hl, src2d_lh, src2d_hh]
 
 
@@ -113,7 +116,7 @@ if __name__ == "__main__":
     import sys
     from PIL import Image
 
-    maxlevel = 2
+    MAX_LEVEL = 2
 
     # 画像読み込み（簡略化のためグレスケ変換）
     img = Image.open(sys.argv[1]).convert("L")
@@ -126,16 +129,16 @@ if __name__ == "__main__":
     image_pyramid = original.copy()
 
     # スケーリング係数
-    scaling_coef = HAAR_SCALING_COEF
-    # scaling_coef = DAUBECHIES2_SCALING_COEF
-    # scaling_coef = DAUBECHIES3_SCALING_COEF
-    # scaling_coef = DAUBECHIES4_SCALING_COEF
+    scal_coef = HAAR_SCALING_COEF
+    # scal_coef = DAUBECHIES2_SCALING_COEF
+    # scal_coef = DAUBECHIES3_SCALING_COEF
+    # scal_coef = DAUBECHIES4_SCALING_COEF
 
     # 分解
     ll = image_pyramid
     image_octabe = []
-    for _ in range(maxlevel):
-        ll, hl, lh, hh = fwt2d(ll, scaling_coef)
+    for _ in range(MAX_LEVEL):
+        ll, hl, lh, hh = fwt2d(ll, scal_coef)
         width = ll.shape[0]
         image_pyramid[0:width, 0:width] = _minmax_scale(ll, 255)
         image_pyramid[0:width, width:2*width] = _minmax_scale(hl, 255)
@@ -144,9 +147,9 @@ if __name__ == "__main__":
         image_octabe.insert(0, [ll, hl, lh, hh])
 
     # 合成
-    for _ in range(maxlevel):
+    for _ in range(MAX_LEVEL):
         ll, hl, lh, hh = image_octabe.pop(0)
-        reconstract = ifwt2d(ll, hl, lh, hh, scaling_coef)
+        reconstract = ifwt2d(ll, hl, lh, hh, scal_coef)
 
     print('Reconstract RMSE:', np.linalg.norm(original - reconstract))
 
