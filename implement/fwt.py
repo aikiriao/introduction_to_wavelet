@@ -83,7 +83,7 @@ def fwt2d(src2d, scaling_coef):
         src_l, src_h = fwt1d(src2d[j, :], scaling_coef)
         src2d_l[j, :] = src_l
         src2d_h[j, :] = src_h
-    # src2d_l, src2d_hを更に左上(ll)、左下(hl)、右上(lh)、右下(hh)に分割
+    # src2d_l, src2d_hを更に左上(ll)、左下(hl)、右上(lh)、右下(hh)に分解
     for j in range(half_src_len):
         src_l, src_h = fwt1d(src2d_l[:, j], scaling_coef)
         src2d_ll[:, j] = src_l
@@ -114,21 +114,21 @@ def ifwt2d(src2d_ll, src2d_hl, src2d_lh, src2d_hh, scaling_coef):
 def fwt2d_mra(src2d, max_level, scaling_coef):
     """ 2次元高速ウェーブレット変換による多重解像度解析 """
     image_octabe = []
+    # 低域/低域(out_ll)の分解を繰り返す
     out_ll = src2d
     for _ in range(max_level):
         out_ll, out_hl, out_lh, out_hh = fwt2d(out_ll, scaling_coef)
-        # 先頭に追加
+        # 先頭に一番解像度の低い情報が来るように、先頭に追記
         image_octabe.insert(0, [out_hl, out_lh, out_hh])
     return [out_ll, image_octabe]
 
 
 def ifwt2d_mra(lowest_scale, image_octabe, scaling_coef):
     """ 2次元高速ウェーブレット逆変換による多重解像度再構成 """
+    # 先頭から取り出しつつ逐次再構成
     reconstract = lowest_scale
     for _, src_h in enumerate(image_octabe):
-        # 先頭から取り出し
         src_hl, src_lh, src_hh = src_h
-        # 再構成
         reconstract = ifwt2d(reconstract, src_hl, src_lh, src_hh, scaling_coef)
     return reconstract
 
