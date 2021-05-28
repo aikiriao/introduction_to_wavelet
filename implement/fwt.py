@@ -35,11 +35,11 @@ def fwt1d(src, scaling_coef):
     """ 1次元高速ウェーブレット変換 """
     # ウェーブレット係数計算
     wavelet_coef = calculate_wavelet_coef(scaling_coef)
+    # 入力が整数だと丸め込まれるためfloatに変換
+    src = src.astype(float)
     # correlate1dはフィルタカーネルの半分（中心）だけ出力が後ろにずれるので
     # 先に入力を前にずらしておく
     src = np.roll(src, -len(scaling_coef)//2)
-    # 入力が整数だと丸め込まれるためfloatに変換
-    src = src.astype(float)
     # 畳み込み 入力の端点は巡回
     # フィルタのインデックスが正方向に増加するためcorrelate1dを使用
     decomp_src = correlate1d(src, scaling_coef, mode='wrap')[::2]
@@ -60,7 +60,7 @@ def ifwt1d(decomp_src, decomp_wav, scaling_coef):
     # 畳み込み 入力の端点は巡回
     src = convolve1d(scaling_interp, scaling_coef, mode='wrap')
     src += convolve1d(wavelet_interp, wavelet_coef, mode='wrap')
-    #  convolve1dはフィルタカーネルの半分（中心）だけ出力が前にずれるので
+    # convolve1dはフィルタカーネルの半分（中心）だけ出力が前にずれるので
     # 入力を後ろにずらす
     src = np.roll(src, len(scaling_coef)//2)
     return src
@@ -89,10 +89,10 @@ def fwt2d(src2d, scaling_coef):
         sl, sh = fwt1d(src2d_h[:, j], scaling_coef)
         src2d_lh[:, j] = sl
         src2d_hh[:, j] = sh
-    return [src2d_ll, src2d_lh, src2d_hl, src2d_hh]
+    return [src2d_ll, src2d_hl, src2d_lh, src2d_hh]
 
 
-def ifwt2d(src2d_ll, src2d_lh, src2d_hl, src2d_hh, scaling_coef):
+def ifwt2d(src2d_ll, src2d_hl, src2d_lh, src2d_hh, scaling_coef):
     """ 2次元高速ウェーブレット逆変換 """
     src_len = src2d_ll.shape[0]
     twice_src_len = 2 * src_len
@@ -123,6 +123,7 @@ if __name__ == "__main__":
     p2width = _power_of_two(max(img.height, img.width))
     image_pyramid = np.zeros((p2width, p2width))
     image_pyramid[0:img.height, 0:img.width] = np.asarray(img)
+    original = image_pyramid.copy()
 
     # スケーリング係数
     scaling_coef = HAAR_SCALING_COEF
@@ -133,24 +134,24 @@ if __name__ == "__main__":
     # 分解
     ll = image_pyramid
     image_octabe = []
-    for level in range(maxlevel):
-        ll, lh, hl, hh = fwt2d(ll, scaling_coef)
+    for _ in range(maxlevel):
+        ll, hl, lh, hh = fwt2d(ll, scaling_coef)
         width = ll.shape[0]
         image_pyramid[0:width, 0:width] = _minmax_scale(ll, 255)
-        image_pyramid[width:2*width, 0:width] = _minmax_scale(lh, 255)
         image_pyramid[0:width, width:2*width] = _minmax_scale(hl, 255)
+        image_pyramid[width:2*width, 0:width] = _minmax_scale(lh, 255)
         image_pyramid[width:2*width, width:2*width] = _minmax_scale(hh, 255)
-        image_octabe.insert(0, [ll, lh, hl, hh])
+        image_octabe.insert(0, [ll, hl, lh, hh])
 
     # 合成
-    for level in range(maxlevel):
-        ll, lh, hl, hh = image_octabe.pop(0)
-        reconstract = ifwt2d(ll, lh, hl, hh, scaling_coef)
+    for _ in range(maxlevel):
+        ll, hl, lh, hh = image_octabe.pop(0)
+        reconstract = ifwt2d(ll, hl, lh, hh, scaling_coef)
 
-    print(np.linalg.norm(np.asarray(img) - reconstract))
+    print('Reconstract RMSE:', np.linalg.norm(original - reconstract))
 
     # 結果保存
-    img.save("original.png")
+    Image.fromarray(original.astype(np.uint8)).save("original.png")
     Image.fromarray(image_pyramid.astype(np.uint8)).save("pyramid.png")
     Image.fromarray(reconstract.astype(np.uint8)).save("reconstruct.png")
 
