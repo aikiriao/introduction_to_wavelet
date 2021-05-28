@@ -9,7 +9,7 @@ DAUBECHIES2_SCALING_COEF = [0.482962913145, 0.836516303738, 0.224143868042, -0.1
 DAUBECHIES3_SCALING_COEF = [0.332670552950, 0.806891509311, 0.459877502118, -0.135011020010, -0.085441273882, 0.035226291882]
 DAUBECHIES4_SCALING_COEF  = [0.230377813309, 0.714846570553, 0.630880767930, -0.027983769417, -0.187034811719, 0.030841381836, 0.032883011667, -0.010597401785]
 
-def _power_of_two(integer):
+def _roundup_power_of_two(integer):
     """ 入力整数を2の冪数(2, 4, 8, 16, ...)に切り上げる """
     return 2 ** int(np.ceil(np.log2(integer)))
 
@@ -120,10 +120,10 @@ if __name__ == "__main__":
 
     # サイズを2の冪数に切り上げ、配列に画像データをロード
     # 余白は0埋め
-    p2width = _power_of_two(max(img.height, img.width))
-    image_pyramid = np.zeros((p2width, p2width))
-    image_pyramid[0:img.height, 0:img.width] = np.asarray(img)
-    original = image_pyramid.copy()
+    p2width = _roundup_power_of_two(max(img.height, img.width))
+    original = np.zeros((p2width, p2width))
+    original[0:img.height, 0:img.width] = np.asarray(img)
+    image_pyramid = original.copy()
 
     # スケーリング係数
     scaling_coef = HAAR_SCALING_COEF
