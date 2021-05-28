@@ -111,6 +111,28 @@ def ifwt2d(src2d_ll, src2d_hl, src2d_lh, src2d_hh, scaling_coef):
     return src2d
 
 
+def fwt2d_mra(src2d, max_level, scaling_coef):
+    """ 2次元高速ウェーブレット変換による多重解像度解析 """
+    image_octabe = []
+    out_ll = src2d
+    for _ in range(max_level):
+        out_ll, out_hl, out_lh, out_hh = fwt2d(out_ll, scaling_coef)
+        # 先頭に追加
+        image_octabe.insert(0, [out_hl, out_lh, out_hh])
+    return [out_ll, image_octabe]
+
+
+def ifwt2d_mra(lowest_scale, image_octabe, scaling_coef):
+    """ 2次元高速ウェーブレット逆変換による多重解像度再構成 """
+    reconstract = lowest_scale
+    for _, src_h in enumerate(image_octabe):
+        # 先頭から取り出し
+        src_hl, src_lh, src_hh = src_h
+        # 再構成
+        reconstract = ifwt2d(reconstract, src_hl, src_lh, src_hh, scaling_coef)
+    return reconstract
+
+
 if __name__ == "__main__":
     import sys
     from PIL import Image
@@ -134,27 +156,27 @@ if __name__ == "__main__":
     # scal_coef = DAUBECHIES4_SCALING_COEF
 
     # 分解
-    ll = image_pyramid
-    image_octabe = []
-    for _ in range(MAX_LEVEL):
-        ll, hl, lh, hh = fwt2d(ll, scal_coef)
-        width = ll.shape[0]
-        image_pyramid[0:width, 0:width] = _minmax_scale(ll, 255)
+    ll, octabe = fwt2d_mra(original, MAX_LEVEL, scal_coef)
+
+    # ピラミッド画像作成
+    width = ll.shape[0]
+    image_pyramid[0:width, 0:width] = _minmax_scale(ll, 255)
+    for _, h in enumerate(octabe):
+        hl, lh, hh = h
+        width = hl.shape[0]
         image_pyramid[0:width, width:2*width] = _minmax_scale(hl, 255)
         image_pyramid[width:2*width, 0:width] = _minmax_scale(lh, 255)
         image_pyramid[width:2*width, width:2*width] = _minmax_scale(hh, 255)
-        image_octabe.insert(0, [ll, hl, lh, hh])
 
-    # 合成
-    for _ in range(MAX_LEVEL):
-        ll, hl, lh, hh = image_octabe.pop(0)
-        reconstract = ifwt2d(ll, hl, lh, hh, scal_coef)
+    # 再構成
+    recon = ifwt2d_mra(ll, octabe, scal_coef)
 
-    print('Reconstract RMSE:', np.linalg.norm(original - reconstract))
+    # 再構成誤差
+    print('Reconstract RMSE:', np.linalg.norm(original - recon))
 
     # 結果保存
     Image.fromarray(original.astype(np.uint8)).save("original.png")
     Image.fromarray(image_pyramid.astype(np.uint8)).save("pyramid.png")
-    Image.fromarray(reconstract.astype(np.uint8)).save("reconstruct.png")
+    Image.fromarray(recon.astype(np.uint8)).save("reconstruct.png")
 
     sys.exit()
