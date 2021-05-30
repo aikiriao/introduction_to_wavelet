@@ -5,7 +5,7 @@ DVIPDFMX := dvipdfmx
 
 # LATEXFLAGS := -interaction=batchmode
 
-TARGET := wavelet_intro_for_seminar.pdf
+TARGET := introduction_to_wavelet.pdf
 TARGET_BASENAME := $(basename $(TARGET))
 
 .PHONY: all clean distclean
