@@ -787,7 +787,7 @@
             \draw[dspconn] (Pm1add) -- node[above] {\small $p_{m+1}$} (HIm1);
 
         \end{tikzpicture}
-        \caption{合成処理} \label{fig:composition_procedure}
+        \caption{再構成処理} \label{fig:composition_procedure}
     \end{figure}
 \end{frame}
 
@@ -808,7 +808,7 @@
     \begin{align*}
         NL + \frac{NL}{2} + \frac{NL}{4} + ... \leq 2NL
     \end{align*}
-    合成処理においても逆向きの手順の計算を行うだけなので計算量は変わらない．従って，計算量は$\mathcal{O}(N)$．
+    再構成処理においても逆向きの手順の計算を行うだけなので計算量は変わらない．従って，計算量は$\mathcal{O}(N)$．
 \end{frame}
 
 \begin{frame}[c]
@@ -822,7 +822,7 @@
             \end{aligned}
         \end{align}
     \end{mylemma}
-    $\Rightarrow$ 入力信号系列をそのまま分解・合成に突っ込んで（ほぼ）OK！\footnote{ハールウェーブレットなら$A=1$}
+    $\Rightarrow$ 入力信号系列をそのまま分解・再構成に突っ込んで（ほぼ）OK！\footnote{ハールウェーブレットなら$A=1$}
 \end{frame}
 
 \begin{frame}[c]
