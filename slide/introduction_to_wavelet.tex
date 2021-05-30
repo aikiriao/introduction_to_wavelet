@@ -400,7 +400,7 @@
 
 \begin{frame}[c]
     \frametitle{例：ハールウェーブレット$\psi_{H}$}
-    $\phi_{H}$が条件(M1)-(M4)を満たすかチェック
+    $\phi_{H}$が条件(M\ref{itm:mra1})-(M\ref{itm:mra2})を満たすかチェック
     \begin{enumerate}[(M1)]
         \item $a,b \in \mathbb{Z}$に対して，
             \small
@@ -453,32 +453,32 @@
     \end{enumerate}
 \end{frame}
 
-\begin{frame}[c]
-    \frametitle{例：ハールウェーブレット$\psi_{H}$}
-    \begin{enumerate}[(M1)]
-            \setcounter{enumi}{2}
-        \item \small
-            $\displaystyle\lim_{m\to\infty} \phi_{Hm,0}(t) = \delta(t)$（$\delta(t)$：インパルス関数）の観察から，$\displaystyle\lim_{m\to\infty}V_{m}$はインパルス関数を時間シフトした集合となる．任意の$f \in L_{2}(\mathbb{R})$，$s \in \mathbb{R}$に対して$\delta(t - s) \in \displaystyle\lim_{m\to\infty}V_{m}$が存在して，
-            \begin{align*}
-                \innprod{f(t)}{\delta(t - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
-            \end{align*}
-            だから，$f \in \displaystyle\lim_{m\to\infty}V_{m}$で$L_{2}(\mathbb{R}) \subset \displaystyle\lim_{m\to\infty}V_{m}$．一方，$\phi_{Hm,n} \in L_{2}(\mathbb{R})$だから$L_{2}(\mathbb{R})\supset \displaystyle\lim_{m\to\infty}V_{m}$．従って，$\displaystyle\lim_{m\to\infty}V_{m} = L_{2}(\mathbb{R})$．
-            \normalsize
-        \item $\displaystyle\lim_{m\to-\infty} \phi_{Hm,n}(t) = 0$より確かに$\displaystyle\lim_{m\to-\infty}V_{m}$は$0$しか含まない．
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}[c]
-    \frametitle{MRAの条件から出てくる性質}
-    (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
-    \begin{align*}
-        \innprod{\phi_{m,p}}{\phi_{m,q}} &= \int_{-\infty}^{\infty} 2^{\frac{m}{2}} \phi(2^{m}t - p) \roverline{2^{\frac{m}{2}} \phi(2^{m}t - q)} \mathrm{d} t \\
-        &= 2^{m} \int_{-\infty}^{\infty} \phi(2^{m}t - p) \roverline{\phi(2^{m}t - q)} \mathrm{d} t \\
-        &= \int_{-\infty}^{\infty} \phi(s - p) \roverline{\phi(s - q)} \mathrm{d} s \quad (s = 2^{m}t) \\
-        &= \delta_{pq} \quad \text{（$\because$ $\phi$はシフトに関して正規直交）}
-    \end{align*}
-    だから，1つのスケーリング関数$\phi$が決まれば全ての$V_{m}$が張られる．
-\end{frame}
+% \begin{frame}[c]
+%     \frametitle{例：ハールウェーブレット$\psi_{H}$}
+%     \begin{enumerate}[(M1)]
+%             \setcounter{enumi}{2}
+%         \item \small
+%             $\displaystyle\lim_{m\to\infty} \phi_{Hm,0}(t) = \delta(t)$（$\delta(t)$：インパルス関数）の観察から，$\displaystyle\lim_{m\to\infty}V_{m}$はインパルス関数を時間シフトした集合となる．任意の$f \in L_{2}(\mathbb{R})$，$s \in \mathbb{R}$に対して$\delta(t - s) \in \displaystyle\lim_{m\to\infty}V_{m}$が存在して，
+%             \begin{align*}
+%                 \innprod{f(t)}{\delta(t - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
+%             \end{align*}
+%             だから，$f \in \displaystyle\lim_{m\to\infty}V_{m}$で$L_{2}(\mathbb{R}) \subset \displaystyle\lim_{m\to\infty}V_{m}$．一方，$\phi_{Hm,n} \in L_{2}(\mathbb{R})$だから$L_{2}(\mathbb{R})\supset \displaystyle\lim_{m\to\infty}V_{m}$．従って，$\displaystyle\lim_{m\to\infty}V_{m} = L_{2}(\mathbb{R})$．
+%             \normalsize
+%         \item $\displaystyle\lim_{m\to-\infty} \phi_{Hm,n}(t) = 0$より確かに$\displaystyle\lim_{m\to-\infty}V_{m}$は$0$しか含まない．
+%     \end{enumerate}
+% \end{frame}
+% 
+% \begin{frame}[c]
+%     \frametitle{MRAの条件から出てくる性質}
+%     (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
+%     \begin{align*}
+%         \innprod{\phi_{m,p}}{\phi_{m,q}} &= \int_{-\infty}^{\infty} 2^{\frac{m}{2}} \phi(2^{m}t - p) \roverline{2^{\frac{m}{2}} \phi(2^{m}t - q)} \mathrm{d} t \\
+%         &= 2^{m} \int_{-\infty}^{\infty} \phi(2^{m}t - p) \roverline{\phi(2^{m}t - q)} \mathrm{d} t \\
+%         &= \int_{-\infty}^{\infty} \phi(s - p) \roverline{\phi(s - q)} \mathrm{d} s \quad (s = 2^{m}t) \\
+%         &= \delta_{pq} \quad \text{（$\because$ $\phi$はシフトに関して正規直交）}
+%     \end{align*}
+%     だから，1つのスケーリング関数$\phi$が決まれば全ての$V_{m}$が張られる．
+% \end{frame}
 
 \begin{frame}[c]
     \frametitle{Dilation方程式（ツースケール関係）}
