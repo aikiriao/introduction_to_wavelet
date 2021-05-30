@@ -26,7 +26,7 @@ def _minmax_scale(vec, maxscale):
 
 
 def calculate_wavelet_coef(scaling_coefficients):
-    """ ウェーブレット係数からスケーリング係数を生成 """
+    """ スケーリング係数からウェーブレット係数を生成 """
     wavelet_coefficients = scaling_coefficients[::-1].copy() # 順序逆の配列
     for i in range(len(scaling_coefficients)):
         wavelet_coefficients[i] *= ((-1) ** i)
@@ -41,7 +41,7 @@ def fwt1d(src, scaling_coef):
     src = src.astype(float)
     # correlate1dはフィルタカーネルの半分（中心）だけ出力が後ろにずれるので
     # 先に入力を前にずらしておく
-    src = np.roll(src, -len(scaling_coef)//2)
+    src = np.roll(src, -len(scaling_coef) // 2)
     # 畳み込み 入力の端点は巡回
     # フィルタのインデックスが正方向に増加するためcorrelate1dを使用
     decomp_src = correlate1d(src, scaling_coef, mode='wrap')[::2]
@@ -64,7 +64,7 @@ def ifwt1d(decomp_src, decomp_wav, scaling_coef):
     src += convolve1d(wavelet_interp, wavelet_coef, mode='wrap')
     # convolve1dはフィルタカーネルの半分（中心）だけ出力が前にずれるので
     # 入力を後ろにずらす
-    src = np.roll(src, len(scaling_coef)//2)
+    src = np.roll(src, len(scaling_coef) // 2)
     return src
 
 

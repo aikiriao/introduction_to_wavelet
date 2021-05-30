@@ -28,6 +28,6 @@ rebuild:
 
 %.dvi: %.tex
 	$(LATEX) $(LATEXFLAGS) $<
-	# $(BIBTEX) $(basename $<)
-	# $(LATEX) $(LATEXFLAGS) $< # 参照を確実に通すため
-	# $(LATEX) $(LATEXFLAGS) $< # 参照を確実に通すため
+	$(BIBTEX) $(basename $<)
+	$(LATEX) $(LATEXFLAGS) $< # 参照を確実に通すため
+	$(LATEX) $(LATEXFLAGS) $< # 参照を確実に通すため

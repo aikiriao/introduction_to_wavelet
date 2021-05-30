@@ -58,6 +58,34 @@
   \end{frame}
 }
 
+% 丸数字
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+% listings
+\usepackage{listings, plistings}
+\lstset{
+    language={Python},
+    basicstyle={\footnotesize\ttfamily},%
+    identifierstyle={\footnotesize},%
+    commentstyle={\scriptsize\itshape},%
+    keywordstyle={\footnotesize\bfseries},%
+    ndkeywordstyle={\footnotesize},%
+    stringstyle={\scriptsize\ttfamily},
+    keywordstyle={\color{blue}},
+    commentstyle={\color{blue}},
+    stringstyle=\color{blue},
+    frame={tb},
+    breaklines=true,
+    columns=[l]{fullflexible},%
+    numbers=left,%
+    xrightmargin=0zw,%
+    xleftmargin=3zw,%
+    numberstyle={\scriptsize},%
+    stepnumber=1,
+    numbersep=1zw,%
+    lineskip=-0.4ex%
+}
+
 \title[ウェーブレットおきもち -- 導入と実装 --]{ウェーブレットおきもち\\-- 導入と実装 --}
 \author[aikiriao]{aikiriao}
 \date{\today}
@@ -77,8 +105,10 @@
 \begin{frame}[c]
     \frametitle{関数はベクトル}
     関数$f: \mathbb{R} \to \mathbb{C}$を無限次元の\structure{ベクトル}と見よう：\\
-    （図）\\
-    関数の\underline{ゼロベクトル}を${ }^{\forall} t \ 0(t) := 0$で定める．
+    \begin{figure}
+        \includegraphics[width=90mm]{./figs/function_is_vector.png}
+    \end{figure}
+    関数のゼロベクトルを${ }^{\forall} t \ 0(t) := 0$で定める．
 \end{frame}
 
 \begin{frame}[c]
@@ -131,7 +161,7 @@
             \end{array}
         \right. \label{eq:fourior_seq}
     \end{align}
-    $f(t)$を$\exp(jn\omega t)$で展開していると見える．\structure{$\exp(jn\omega t)$は直交基底をなしている}\footnote{ここでは天下りとする．なんで？と思うので補足の補題\ref{lem:triangle_completeness}を参照}．
+    $f(t)$を$\exp(jn\omega t)$で展開していると見える．\structure{$\frac{1}{\sqrt{T}}\exp(jn\omega t)$は正規直交基底をなしている}\footnote{ここでは天下りとする．補足の補題\ref{lem:triangle_completeness}を参照}．
 \end{frame}
 
 \begin{frame}[c]
@@ -140,8 +170,10 @@
     \begin{align}
         c_{n} = \frac{1}{T} \innprod{f(t)}{\exp(jn\omega t)}
     \end{align}
-    $n\omega$の周波数成分との類似度を測っていると言える．
-    （射影してる図）
+    $n\omega$の周波数成分との類似度を測っている．
+    \begin{figure}
+        \includegraphics[width=90mm]{./figs/fourior_function_projection.png}
+    \end{figure}
 \end{frame}
 
 \subsection{連続ウェーブレット変換}
@@ -156,10 +188,47 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{連続ウェーブレット変換}
-    （いろいろなウェーブレットの波形を見せる） \\
-    メキシカンハット，ハール，ドベシィ \\
-    スケールを変えながら．
+    \frametitle{例：ハールウェーブレット$\psi_{H}$}
+    \vspace*{-10pt}
+    \begin{figure}
+        \includegraphics[width=80mm]{./figs/haar_wavelet.pdf}
+    \end{figure}
+    \vspace*{-5pt}
+    \begin{align*}
+        \psi_{H}(t) := 
+        \left\{
+           \begin{array}{cc}
+               1  & (0 \leq t < \frac{1}{2}) \\
+               -1 & (\frac{1}{2} \leq t < 1) \\
+               0  & \text{otherwise}
+           \end{array}
+        \right. 
+    \end{align*}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{例：メキシカンハットウェーブレット}
+    \vspace*{-10pt}
+    \begin{figure}
+        \includegraphics[width=80mm]{./figs/mexicanhat_wavelet.pdf}
+    \end{figure}
+    \vspace*{-5pt}
+    \begin{align*}
+        \psi(t) = (1 - t^{2}) \exp(-t^{2})
+    \end{align*}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{例：シャノンウェーブレット}
+    \vspace*{-10pt}
+    \begin{figure}
+        \includegraphics[width=80mm]{./figs/shanon_wavelet.pdf}
+    \end{figure}
+    \vspace*{-5pt}
+    \begin{align*}
+        \psi(t) &= 2\mathrm{sinc}(2t) - \mathrm{sinc}(t) \\
+        \mathrm{sinc}(t) &:= \frac{\sin(\pi t)}{\pi t}
+    \end{align*}
 \end{frame}
 
 \begin{frame}[c]
@@ -178,6 +247,13 @@
 \end{frame}
 
 \begin{frame}[c]
+    \frametitle{例：ハールウェーブレット}
+    \begin{figure}
+        \includegraphics[width=100mm]{./figs/haar_wavelets.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[c]
     \frametitle{連続ウェーブレット変換}
     関数$f$の連続ウェーブレット変換$F(a,b)$は，$f$と$\psi_{a,b}$の内積によって得られる：
     \begin{align}
@@ -185,12 +261,6 @@
         &= \innprod{f(t)}{\psi_{a,b}(t)} \nonumber
     \end{align}
     変換先はスケール$a$とシフト$b$の2軸（スケログラムという）
-\end{frame}
-
-\begin{frame}[c]
-    \frametitle{連続ウェーブレット変換}
-    メキシカンハットウェーブレットによる解析（スケログラム）
-    スイープ信号と，非連続ノイズ混入波形．STFTと比べ，ウェーブレットの方がどこで不連続点が出てるかわかることを言う．
 \end{frame}
 
 \subsection{直交ウェーブレット変換}
@@ -255,9 +325,10 @@
 
 \begin{frame}[c]
     \frametitle{多重解像度解析(MRA)の概要}
-    （図：分解例）
-    \\
-    以上がお気持ち．以下，形式的に考えていく．
+    \begin{figure}
+        \includegraphics[width=95mm]{./figs/rma_absraction.png}
+    \end{figure}
+    この操作を形式的に考えていく．
 \end{frame}
 
 \subsection{多重解像度解析の条件と性質}
@@ -270,12 +341,6 @@
         \phi_{m,n}(t) &:= 2^{\frac{m}{2}}\phi(2^{m}t - n)
     \end{align}
     を基に構成される\footnote{$l_{2}(\mathbb{Z})$は二乗総和可能な数列($\sum_{n} |c_{n}|^{2} < \infty$)の集合}\footnote{文献によっては$m$の符号が逆転しているので注意！}．$\phi$を\structure{スケーリング関数(scaling function)}という．
-\end{frame}
-
-\begin{frame}[c]
-    \frametitle{例：ハールウェーブレット}
-    TODO:\\
-    具体例としてハールウェーブレットを使う．世界一やさしいと思うので．
 \end{frame}
 
 \begin{frame}[c, allowframebreaks]
@@ -296,7 +361,11 @@
             \newpage
         \item \label{itm:mra2} $V_{m} \subset V_{m+1}$
             \begin{itemize}
-                \item[お気持ち] $V_{m}$は入れ子構造をなしている（図！！）．解像度$m$を上げると表現可能な信号が増える
+                \item[お気持ち] $V_{m}$は入れ子構造をなしている．
+                    \begin{figure}
+                        \includegraphics[width=70mm]{./figs/mra_scaling_set.png}
+                    \end{figure}
+                    解像度$m$を上げると表現可能な信号が増える
             \end{itemize}
             \newpage
         \item \label{itm:mra3} $\roverline{\bigcup_{m} V_{m}} = L_{2}(\mathbb{R})$（$\roverline{A}$：集合$A$の閉包）
@@ -311,8 +380,92 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{例：ハールウェーブレット}
-    TODO:
+    \frametitle{例：ハールウェーブレット$\psi_{H}$}
+    $\psi_{H}$に対応するスケーリング関数$\phi_{H}$
+    \begin{align*}
+        \phi_{H}(t) := 
+        \left\{
+           \begin{array}{cc}
+               1  & (0 \leq t < 1) \\
+               0  & \text{otherwise}
+           \end{array}
+        \right. 
+    \end{align*}
+    $\phi_{H m,n}(t) := 2^{\frac{m}{2}}\phi_{H}(2^{m}t - n)$とかく．
+    \vspace*{-5pt}
+    \begin{figure}
+        \includegraphics[width=70mm]{./figs/haar_scaling_functions.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{例：ハールウェーブレット$\psi_{H}$}
+    $\phi_{H}$が条件(M1)-(M4)を満たすかチェック
+    \begin{enumerate}[(M1)]
+        \item $a,b \in \mathbb{Z}$に対して，
+            \small
+            \begin{align*}
+                & \innprod{\phi_{H}(t-a)}{\phi_{H}(t-b)} = \int_{-\infty}^{\infty} \phi_{H}(t-a) \roverline{\phi_{H}(t-b)} \mathrm{d} t \\
+                &= \int_{-\infty}^{\infty} \phi_{H}(s) \phi_{H}(s+a-b) \mathrm{d} s \quad (s = t - a) \\
+                &= \delta_{ab}
+            \end{align*}
+            \normalsize
+            なので$\{ \phi_{H}(t - n) | n \in \mathbb{Z} \}$は正規直交基底．
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{例：ハールウェーブレット$\psi_{H}$}
+    \begin{enumerate}[(M1)]
+        \setcounter{enumi}{1}
+        \item 任意の$m,n \in \mathbb{Z}$に対して，
+            \small
+            \begin{align*}
+                \phi_{H m,n}(t) &= 
+                \left\{
+                    \begin{array}{cc}
+                        2^{\frac{m}{2}} & 2^{-m}n \leq t < 2^{-m}(n+1) \\
+                        0  & \text{otherwise}
+                    \end{array}
+                    \right. \\
+                \phi_{H m+1,2n}(t) &= 
+                \left\{
+                    \begin{array}{cc}
+                        2^{\frac{m+1}{2}} & 2^{-(m+1)} 2n \leq t < 2^{-(m+1)}(2n+1) \\
+                        0  & \text{otherwise}
+                    \end{array}
+                    \right. \\
+                    &= \left\{
+                    \begin{array}{cc}
+                        2^{\frac{m+1}{2}} & 2^{-m} n \leq t < 2^{-m}(n+\frac{1}{2}) \\
+                        0  & \text{otherwise}
+                    \end{array}
+                    \right. 
+            \end{align*}
+            \normalsize
+            だから，任意の$\phi_{H m,n} \in V_{m}$は$\phi_{H m+1,2n}, \phi_{H m+1,2n+1} \in V_{m+1}$を用いて
+            \small
+            \begin{align}
+                \phi_{H m,n}(t) = 2^{-\frac{1}{2}} \phi_{H m+1,2n}(t) + 2^{-\frac{1}{2}} \phi_{H m+1,2n+1}(t) \label{eq:haar_dilation_eq}
+            \end{align}
+            \normalsize
+            と表せる．よって$V_{m} \subset V_{m+1}$．
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{例：ハールウェーブレット$\psi_{H}$}
+    \begin{enumerate}[(M1)]
+            \setcounter{enumi}{2}
+        \item \small
+            $\displaystyle\lim_{m\to\infty} \phi_{Hm,0}(t) = \delta(t)$（$\delta(t)$：インパルス関数）の観察から，$\displaystyle\lim_{m\to\infty}V_{m}$はインパルス関数を時間シフトした集合となる．任意の$f \in L_{2}(\mathbb{R})$，$s \in \mathbb{R}$に対して$\delta(t - s) \in \displaystyle\lim_{m\to\infty}V_{m}$が存在して，
+            \begin{align*}
+                \innprod{f(t)}{\delta(t - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
+            \end{align*}
+            だから，$f \in \displaystyle\lim_{m\to\infty}V_{m}$で$L_{2}(\mathbb{R}) \subset \displaystyle\lim_{m\to\infty}V_{m}$．一方，$\phi_{Hm,n} \in L_{2}(\mathbb{R})$だから$L_{2}(\mathbb{R})\supset \displaystyle\lim_{m\to\infty}V_{m}$．従って，$\displaystyle\lim_{m\to\infty}V_{m} = L_{2}(\mathbb{R})$．
+            \normalsize
+        \item $\displaystyle\lim_{m\to-\infty} \phi_{Hm,n}(t) = 0$より確かに$\displaystyle\lim_{m\to-\infty}V_{m}$は$0$しか含まない．
+    \end{enumerate}
 \end{frame}
 
 \begin{frame}[c]
@@ -328,7 +481,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{MRAの条件から出てくる性質}
+    \frametitle{Dilation方程式（ツースケール関係）}
     (M\ref{itm:mra2})が成立すれば，$V_{-1} \subset V_{0}$より，$\phi(t/2) \in V_{-1}$は$V_{0}$の基底$\{ \phi(t-n) | n \in \mathbb{Z} \}$の線形結合で表現できるから，
     \begin{align}
         \phi(t/2) = \sqrt{2} \sum_{n} h[n] \phi(t - n) \label{eq:dilation_eq}
@@ -339,7 +492,9 @@
 \begin{frame}[c]
     \frametitle{MRAのウェーブレット関数}
     (M\ref{itm:mra2})より$V_{m} \subset V_{m+1}$だから，$V_{m} \oplus W_{m} = V_{m+1}$ （$\oplus$：直和）となる$W_{m}$が存在する：\\
-    （包含関係図！！）\\
+    \begin{figure}
+        \includegraphics[width=70mm]{./figs/mra_scaling_wavelet_set.png}
+    \end{figure}
 \end{frame}
 
 \begin{frame}[c]
@@ -378,7 +533,21 @@
 
 \begin{frame}[c]
     \frametitle{例：ハールウェーブレット}
-    TODO:
+    式\eqref{eq:haar_dilation_eq}において$m=-1, n=0$とおくと，
+    \begin{align*}
+        \phi_{H -1,0}(t) &= 2^{-\frac{1}{2}} \phi_{H 0,0}(t) + 2^{-\frac{1}{2}} \phi_{H 0,1}(t) \\
+        \iff 2^{-\frac{1}{2}} \phi_{H}(t/2) &= 2^{-\frac{1}{2}} \phi_{H}(t) + 2^{-\frac{1}{2}} \phi_{H}(t - 1) \\
+        \iff \phi_{H}(t/2) &= \phi_{H}(t) + \phi_{H}(t - 1)
+    \end{align*}
+    Dilation方程式（式\eqref{eq:dilation_eq}）と見比べると
+    \begin{align*}
+        h[0] = h[1] = 2^{-\frac{1}{2}}
+    \end{align*}
+    式\eqref{eq:orth_condition}により$g[0] = 2^{-\frac{1}{2}},\ g[1] = -2^{-\frac{1}{2}}$が得られ，
+    \begin{align*}
+        \psi_{H}(t/2) = \phi_{H}(t) - \phi_{H}(t - 1)
+    \end{align*}
+    に対応していることが確認できる．
 \end{frame}
 
 \subsection{高速ウェーブレット変換(FWT)}
@@ -422,7 +591,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{逐次的な展開係数計算}
+    \frametitle{FWTの導出（展開）}
     式\eqref{eq:orth_decomp}の展開係数$p_{m}[n], q_{m}[n]$を計算するには$\phi, \psi$が必要と思えるが，\structure{実はその必要はなく，$h[n], g[n]$を用いて計算できる}．
     \begin{mylemma}[展開係数計算]
         \vspace*{-15pt}
@@ -434,7 +603,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{逐次的な展開係数計算}
+    \frametitle{FWTの導出（展開）}
     \scriptsize
     （証明）準備として，Dilation方程式（式\eqref{eq:dilation_eq}）から導かれる関係式に着目する．
     \begin{align}
@@ -455,7 +624,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{逐次的な再構成計算}
+    \frametitle{FWTの導出（再構成）}
     逆に，\structure{$h[n], g[n]$を用いて$p_{m}[n], q_{m}[n]$から$p_{m+1}[n]$を再構成できる}．
     \begin{mylemma}[再構成計算]
         \vspace*{-15pt}
@@ -467,7 +636,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{逐次的な再構成計算}
+    \frametitle{FWTの導出（再構成）}
     \scriptsize
     （証明）$p_{m+1}[n]$の定義と$x$の直交展開式（式\eqref{eq:orth_decomp}）より，
     \begin{align*}
@@ -486,7 +655,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{逐次的な再構成計算}
+    \frametitle{FWTの導出（再構成）}
     \scriptsize
     任意の$t \geq m+1$に対して(M\ref{itm:mra2})より$V_{m+1} \subset V_{t}$だから，
     \begin{align*}
@@ -509,7 +678,7 @@
 
 \begin{frame}[c]
     \frametitle{FWTのフィルタ表現}
-    補題\ref{lem:mra_updation}の式\eqref{eq:mra_downsampling}をフィルタ演算処理で表すと
+    展開処理（式\eqref{eq:scaling_coef_updation}，\eqref{eq:wavelet_coef_updation}）をフィルタ表現すると
     \begin{figure}
         \centering
         \begin{tikzpicture}[auto, >=latex']
@@ -562,7 +731,7 @@
             \draw[dspconn] (GDm_1) -- (Qm_2);
             % \draw[dspconn] (Hm_1) -- (HDm);
         \end{tikzpicture}
-        \caption{分解処理} \label{fig:decomposition_procedure}
+        \caption{展開処理} \label{fig:decomposition_procedure}
     \end{figure}
     \structure{$\roverline{H}$はローパスフィルタ，$\roverline{G}$はハイパスフィルタ}
     \begin{itemize}
@@ -572,7 +741,7 @@
 
 \begin{frame}[c]
     \frametitle{FWTのフィルタ表現}
-    補題\ref{lem:mra_updation}の式\eqref{eq:mra_upsampling}をフィルタ演算処理で表すと
+    再構成処理（式\eqref{eq:scaling_coef_reconstraction}）をフィルタ表現すると
     \begin{figure}
         \centering
         \begin{tikzpicture}[auto, >=latex']
@@ -653,7 +822,7 @@
             \end{aligned}
         \end{align}
     \end{mylemma}
-    $\Rightarrow$ 入力信号系列をそのまま分解・合成に突っ込んで（ほぼ）OK！
+    $\Rightarrow$ 入力信号系列をそのまま分解・合成に突っ込んで（ほぼ）OK！\footnote{ハールウェーブレットなら$A=1$}
 \end{frame}
 
 \begin{frame}[c]
@@ -692,16 +861,72 @@
     注意点
     \begin{itemize}
         \item スケールは$2$の指数に限る（FFTは等間隔スケール）
-        \item 不確定性原理を超越したわけではない
+        \item 不確定性原理（補足参照）を超越したわけではない
     \end{itemize}
 \end{frame}
 
 \section{実装}
 
+\subsection{Pythonによる実装}
+
+\subsubsection{1次元FWT}
+
+\begin{frame}[c]
+    \frametitle{ウェーブレット係数の計算(\texttt{fwt.py})}
+    \lstinputlisting[language={Python}, linerange={28-33,99999-999999}, firstnumber=28, label=fwt1d]{./implement/fwt.py}
+    \small
+    フィルタ係数条件（式\eqref{eq:orth_condition}）において，
+    \begin{align*}
+        g[n] = (-1)^{n} \roverline{h[1 - n]} = (-1)^{n} \roverline{h[L + 1 - n]}
+    \end{align*}
+    だから（$L$：フィルタ係数長．離散フーリエ変換の性質より周期性を持つ），$n$の範囲を$0,...,L-1$に直すと，
+    \begin{align*}
+        g[n] = (-1)^{n} \roverline{h[L - 1 - n]} \quad (n = 0, ..., L-1)
+    \end{align*}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{FWTの実装例(\texttt{fwt.py})}
+    \lstinputlisting[language={Python}, linerange={36-49,99999-999999}, firstnumber=36, label=fwt1d]{./implement/fwt.py}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{IFWTの実装例(\texttt{fwt.py})}
+    \lstinputlisting[language={Python}, linerange={52-68,99999-999999}, firstnumber=52, label=ifwt1d]{./implement/fwt.py}
+\end{frame}
+
+\subsubsection{2次元FWT}
+
+\begin{frame}[c]
+    \frametitle{2次元FWTの考え方}
+    縦/横方向にFWTを適用すればOK．
+    \begin{figure}
+        \includegraphics[width=90mm]{./figs/2dfwt_description.png}
+        \caption{結果を横/縦の成分で示すと，\circled{1}=低域/低域，\circled{2}=高域/低域，\circled{3}=低域/高域，\circled{4}=高域/高域}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{2次元FWTの実装例(\texttt{fwt.py})}
+    \lstinputlisting[language={Python}, linerange={71-72,99999-999999}, firstnumber=71, label=fwt2d]{./implement/fwt.py}
+    \lstinputlisting[language={Python}, linerange={81-94,99999-999999}, firstnumber=81, label=fwt2d]{./implement/fwt.py}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{2次元IFWTの実装例(\texttt{fwt.py})}
+    \lstinputlisting[language={Python}, linerange={97-111,99999-999999}, firstnumber=97, label=ifwt2d]{./implement/fwt.py}
+\end{frame}
+
 \subsection{静止画への適用}
-\subsubsection{2次元拡張}
+
 \subsubsection{分解・再合成}
+
+\begin{frame}[c]
+    \frametitle{静止画を分解してみる}
+\end{frame}
+
 \subsubsection{デノイジング}
+
 \subsubsection{圧縮}
 
 \appendix
@@ -875,16 +1100,16 @@
 \begin{frame}[c]
     \frametitle{三角関数の完全性}
     \begin{mylemma}[三角関数の完全性]
-        $\left\{ \exp(jn\omega t) | n \in \mathbb{Z} \right\}$はフーリエ級数展開可能な関数の直交基底系で，これ以外に基底は存在しない
+        $\left\{ \frac{1}{\sqrt{T}}\exp(jn\omega t) | n \in \mathbb{Z} \right\}$はフーリエ級数展開可能な関数の正規直交基底系
         \label{lem:triangle_completeness}
     \end{mylemma}
     \scriptsize
     （証明）収束定理より任意のフーリエ級数展開可能な関数を表現可能だから，基底系をなすことは示されている．次に直交性を示す．$n,m \in \mathbb{Z}$に対して1周期分の内積をとると，
     \begin{align*}
-        & \innprod{\exp(jn\omega t)}{\exp(jm\omega t)} = \int_{-T/2}^{T/2} \exp(jn\omega t) \exp(-jm\omega t) \mathrm{d}t \\
-        &= \left[ \frac{\exp\left\{ j(n - m)2\pi t / T \right\}}{j(n - m)2\pi/T} \right]_{-T/2}^{T/2} \quad (\because \omega = 2\pi / T) \\
-        &= \frac{T}{\pi} \frac{\exp\left\{ j(n - m)\pi \right\} - \exp\left\{ -j(n - m)\pi \right\}}{j2(n - m)} = \frac{T}{\pi} \frac{\sin\left\{ (n - m) \pi \right\}}{n - m} \quad \text{（$\because$ オイラーの公式）} \\
-        &= T\delta_{nm}  \quad \text{（$\delta$：クロネッカーのデルタ）}
+        & \innprod{\frac{1}{\sqrt{T}}\exp(jn\omega t)}{\frac{1}{\sqrt{T}}\exp(jm\omega t)} = \frac{1}{T} \int_{-T/2}^{T/2} \exp(jn\omega t) \exp(-jm\omega t) \mathrm{d}t \\
+        &= \frac{1}{T} \left[ \frac{\exp\left\{ j(n - m)2\pi t / T \right\}}{j(n - m)2\pi/T} \right]_{-T/2}^{T/2} \quad (\because \omega = 2\pi / T) \\
+        &= \frac{1}{\pi} \frac{\exp\left\{ j(n - m)\pi \right\} - \exp\left\{ -j(n - m)\pi \right\}}{j2(n - m)} = \frac{1}{\pi} \frac{\sin\left\{ (n - m) \pi \right\}}{n - m} \quad \text{（$\because$ オイラーの公式）} \\
+        &= \delta_{nm}  \quad \text{（$\delta$：クロネッカーのデルタ）}
     \end{align*}
     最後の式変形で$n=m$のときは$x=n-m$とおいて$x\to 0$とする：
     \begin{align*}
@@ -1047,7 +1272,7 @@
 \begin{frame}[c]
     \frametitle{式\eqref{eq:orth_condition}の証明 補題\ref{lem:orth_condition_for_scaling_filter}}
     \begin{mylemma}[Dilation方程式を満たす$H(\omega)$の性質]
-        Dilation方程式（式\eqref{eq:dilation_eq}）を満たす係数$h[n]$の離散時間フーリエ変換$H(\omega)$は，
+        Dilation方程式（式\eqref{eq:dilation_eq}）を満たす係数$h[n]$の離散時間フーリエ変換$H(\omega)$\footnote{$H(\omega) := \sum_{n} h[n] \exp(-jn\omega)$}は，
         \begin{align}
             |H(\omega)|^{2} + |H(\omega+\pi)|^{2} = 2 \label{eq:scaling_orth_condition_in_freq}
         \end{align}
@@ -1143,7 +1368,7 @@
 
 \begin{frame}[c]
     \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
-    $h, g$の離散時間フーリエ変換\footnote{$H(\omega) := \sum_{n} h[n] \exp(-jn\omega)$}を$H, G$と書き， 
+    $h, g$の離散時間フーリエ変換を$H, G$と書き， 
     \begin{align}
         \ve{H}(\omega) := \frac{1}{\sqrt{2}}
         \left[ \begin{array}{cc}
@@ -1160,7 +1385,44 @@
 
 \begin{frame}[c]
     \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
-    \begin{mylemma}[分解・合成の行列表現]
+    $h, g$の離散時間フーリエ変換を$H, G$と書き， 
+    \begin{align}
+        \ve{H}(\omega) := \frac{1}{\sqrt{2}}
+        \left[ \begin{array}{cc}
+            \roverline{H(\omega)} & \roverline{H(\omega + \pi)} \\
+            \roverline{G(\omega)} & \roverline{G(\omega + \pi)}
+        \end{array} \right] \label{eq:mra_updation_matrix}
+    \end{align}
+    とおく．補題\ref{lem:orth_condition_for_scaling_filter}と補題\ref{lem:scale_wavelet_orth_condition_in_freq}を満たすならば，$\ve{H}(\omega)$はユニタリ行列（$\ve{H}^{\ast}(\omega) = \ve{H}^{-1}(\omega)$）である\footnote{\scriptsize
+    （証明）$\ve{H}(\omega)$と$\ve{H}^{\ast}(\omega)$の積をとれば，
+    \begin{align*}
+        \ve{H}(\omega)\ve{H}^{\ast}(\omega) &= \frac{1}{2}
+        \left[ \begin{array}{cc}
+            \roverline{H(\omega)} & \roverline{H(\omega + \pi)} \\
+            \roverline{G(\omega)} & \roverline{G(\omega + \pi)}
+        \end{array} \right]
+        \left[ \begin{array}{cc}
+            H(\omega) & G(\omega) \\
+            H(\omega + \pi) & G(\omega + \pi)
+        \end{array} \right] \\
+        &= \frac{1}{2}
+        \left[ \begin{array}{cc}
+            \roverline{H(\omega)} H(\omega) + \roverline{H(\omega + \pi)} H(\omega + \pi) & \roverline{H(\omega)} G(\omega) + \roverline{H(\omega + \pi)} G(\omega + \pi) \\
+            \roverline{G(\omega)} H(\omega) + \roverline{G(\omega + \pi)} H(\omega + \pi) & \roverline{G(\omega)} G(\omega) + \roverline{G(\omega + \pi)} G(\omega + \pi)
+        \end{array} \right] \\
+        &= \frac{1}{2}
+        \left[ \begin{array}{cc}
+            2 & 0 \\
+            0 & 2
+        \end{array} \right] \quad \text{（$\because$ 補題\ref{lem:orth_condition_for_scaling_filter}と補題\ref{lem:scale_wavelet_orth_condition_in_freq}）} \\
+        &= \ve{I}
+    \end{align*}
+    }．\vspace{15pt} 
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
+    \begin{mylemma}[FWTの行列表現]
         $\ve{H}(\omega)$がユニタリ行列であれば，次が成り立つ：
         \small
         \begin{align}
@@ -1258,38 +1520,6 @@
         \end{array}\right]
     \end{align*}
     が得られる．式\eqref{eq:mra_upsampling}は$\omega$を$2\omega$に置き換えて得られる．
-\end{frame}
-
-\begin{frame}[c]
-    \frametitle{式\eqref{eq:orth_condition}の証明 補題\ref{lem:unitary_condition}}
-    \begin{mylemma}[$\ve{H}(\omega)$がユニタリ行列となる条件]
-        補題\ref{lem:orth_condition_for_scaling_filter}と補題\ref{lem:scale_wavelet_orth_condition_in_freq}を満たすならば，$\ve{H}(\omega)$はユニタリ行列である
-        \label{lem:unitary_condition}
-    \end{mylemma}
-    \scriptsize
-    （証明）$\ve{H}(\omega)$のエルミート共役$\ve{H}^{\ast}(\omega)$との積をとれば，
-    \begin{align*}
-        \ve{H}(\omega)\ve{H}^{\ast}(\omega) &= \frac{1}{2}
-        \left[ \begin{array}{cc}
-            \roverline{H(\omega)} & \roverline{H(\omega + \pi)} \\
-            \roverline{G(\omega)} & \roverline{G(\omega + \pi)}
-        \end{array} \right]
-        \left[ \begin{array}{cc}
-            H(\omega) & G(\omega) \\
-            H(\omega + \pi) & G(\omega + \pi)
-        \end{array} \right] \\
-        &= \frac{1}{2}
-        \left[ \begin{array}{cc}
-            \roverline{H(\omega)} H(\omega) + \roverline{H(\omega + \pi)} H(\omega + \pi) & \roverline{H(\omega)} G(\omega) + \roverline{H(\omega + \pi)} G(\omega + \pi) \\
-            \roverline{G(\omega)} H(\omega) + \roverline{G(\omega + \pi)} H(\omega + \pi) & \roverline{G(\omega)} G(\omega) + \roverline{G(\omega + \pi)} G(\omega + \pi)
-        \end{array} \right] \\
-        &= \frac{1}{2}
-        \left[ \begin{array}{cc}
-            2 & 0 \\
-            0 & 2
-        \end{array} \right] \quad \text{（$\because$ 補題\ref{lem:orth_condition_for_scaling_filter}と補題\ref{lem:scale_wavelet_orth_condition_in_freq}）} \\
-        &= \ve{I}
-    \end{align*}
 \end{frame}
 
 \subsection{直交直和分解可能な条件}
@@ -1447,14 +1677,18 @@
     \frametitle{不確定性原理}
     \begin{itemize}
         \item[現象1] 短時間フーリエ変換でより広い時間情報を得ようとして窓幅を大きく取ると($\Delta t$：小)周波数分解能が小さく（狭く）($\Delta \omega$：大)なる
-        \item[現象2] Wavelet変換でスケール$a$を小さく取ると細かい振動を捉えられる（$\Delta \omega$：小）が，時間幅は狭く（$\Delta t$：大）なる
+        \item[現象2] ウェーブレット変換でスケール$a$を小さく取ると細かい振動を捉えられる（$\Delta \omega$：小）が，時間幅は狭く（$\Delta t$：大）なる
         \item[現象3] フーリエ変換は周波数分解能が最大($\Delta \omega \to 0$)だが，時間分解能は最悪($\Delta t \to \infty$)
     \end{itemize}
 \end{frame}
 
 \begin{frame}[c]
     \frametitle{不確定性原理}
-    ハイゼンベルクの箱の図
+    時間-周波数領域で現象を描くと，
+    \begin{figure}
+        \includegraphics[width=60mm]{./figs/heisenburg_box.png}
+    \end{figure}
+    この図に現れる矩形領域をハイゼンベルクの箱と言う．
 \end{frame}
 
 \subsection{不確定性原理の証明} 
