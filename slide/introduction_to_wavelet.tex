@@ -1,4 +1,4 @@
-%スライド用コマンド-dvipdfmじゃないと栞は作られない
+%  スライド用コマンド-dvipdfmじゃないと栞は作られない
 \documentclass[dvipdfmx,graphicx,14pt]{beamer}
 %\usepackage{etex} % In order to use too many packages
 %\documentclass[dvipdfmx,graphicx]{beamer}
@@ -61,7 +61,7 @@
 }
 
 % 丸数字
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 
 % listings
 \usepackage{listings, plistings}
