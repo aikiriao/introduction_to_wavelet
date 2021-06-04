@@ -43,6 +43,8 @@
 \usepackage[backend=bibtex, sorting=none]{biblatex}
 \usepackage{hyperref}
 \addbibresource{references}
+\newcommand{\myhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+\newcommand{\myurl}[1]{\color{blue}{\url{#1}}}%
 \AtBeginBibliography{\scriptsize}
 
 % セクション開始時にページ挿入
@@ -87,7 +89,7 @@
 }
 
 \title[ウェーブレットおきもち -- 導入と実装 --]{ウェーブレットおきもち\\-- 導入と実装 --}
-\author[aikiriao]{aikiriao \\ Available at: {\scriptsize \url{https://example.com}} \\ Source: {\scriptsize \url{https://github.com/aikiriao/introduction_to_wavelet}}}
+\author[aikiriao]{aikiriao \\ Available at: {\scriptsize \myurl{https://example.com}} \\ Source: {\scriptsize \myurl{https://github.com/aikiriao/introduction_to_wavelet}}}
 \date{\today}
 
 \begin{document}
@@ -326,7 +328,7 @@
 \begin{frame}[c]
     \frametitle{多重解像度解析(MRA)の概要}
     \begin{figure}
-        \includegraphics[width=95mm]{./figs/rma_absraction.png}
+        \includegraphics[width=90mm]{./figs/rma_absraction.png}
     \end{figure}
     この操作を形式的に考えていく．
 \end{frame}
@@ -353,15 +355,25 @@
             \end{align*}
             によって張られる
             \begin{itemize}
-                \item[お気持ち] スケーリング関数$\phi$は整数シフトに関して正規直交基底となることを要求：
+                \item[M\ref{itm:mra1}お気持ち] スケーリング関数$\phi$は整数シフトに関して正規直交基底となることを要求：
                     \begin{align*}
                         \innprod{\phi(t - n)}{\phi(t - m)} = \delta_{nm}
                     \end{align*}
+                    (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
+                    \footnotesize
+                    \begin{align*}
+                        \innprod{\phi_{m,p}}{\phi_{m,q}} &= \int_{-\infty}^{\infty} 2^{\frac{m}{2}} \phi(2^{m}t - p) \roverline{2^{\frac{m}{2}} \phi(2^{m}t - q)} \mathrm{d} t \\
+                        &= 2^{m} \int_{-\infty}^{\infty} \phi(2^{m}t - p) \roverline{\phi(2^{m}t - q)} \mathrm{d} t \\
+                        &= \int_{-\infty}^{\infty} \phi(s - p) \roverline{\phi(s - q)} \mathrm{d} s \quad (s = 2^{m}t) \\
+                        &= \delta_{pq} \quad \text{（$\because$ $\phi$はシフトに関して正規直交）}
+                    \end{align*}
+                    \small
+                    だから，$V_{0}$さえ定まれば全ての$V_{m}$が張られる．
             \end{itemize}
             \newpage
         \item \label{itm:mra2} $V_{m} \subset V_{m+1}$
             \begin{itemize}
-                \item[お気持ち] $V_{m}$は入れ子構造をなしている．
+                \item[M\ref{itm:mra2}お気持ち] $V_{m}$は入れ子構造をなしている．
                     \begin{figure}
                         \includegraphics[width=70mm]{./figs/mra_scaling_set.png}
                     \end{figure}
@@ -370,11 +382,11 @@
             \newpage
         \item \label{itm:mra3} $\roverline{\bigcup_{m} V_{m}} = L_{2}(\mathbb{R})$（$\roverline{A}$：集合$A$の閉包）
             \begin{itemize}
-                \item[お気持ち] $\displaystyle\lim_{m \to \infty} V_{m} = L_{2}(\mathbb{R})$であること，つまり，$L_{2}(\mathbb{R})$のどんな信号であっても任意の精度で近似できる
+                \item[M\ref{itm:mra3}お気持ち] $\displaystyle\lim_{m \to \infty} V_{m} = L_{2}(\mathbb{R})$であること，つまり，$L_{2}(\mathbb{R})$のどんな信号であっても任意の精度で近似できる
             \end{itemize}
-        \item $\bigcap_{m} V_{m} = \{ 0 \}$
+        \item \label{itm:mra4} $\bigcap_{m} V_{m} = \{ 0 \}$
             \begin{itemize}
-                \item[お気持ち] $\displaystyle\lim_{m \to -\infty} V_{m} = \{ 0 \}$であること，つまり，解像度を極限まで落とすと$V_{m}$に含まれる信号は定値関数$0$のみになる
+                \item[M\ref{itm:mra4}お気持ち] $\displaystyle\lim_{m \to -\infty} V_{m} = \{ 0 \}$であること，つまり，解像度を極限まで落とすと$V_{m}$に含まれる信号は定値関数$0$のみになる
             \end{itemize}
     \end{enumerate}
 \end{frame}
@@ -400,7 +412,7 @@
 
 \begin{frame}[c]
     \frametitle{例：ハールウェーブレット$\psi_{H}$}
-    $\phi_{H}$が条件(M\ref{itm:mra1})-(M\ref{itm:mra2})を満たすかチェック
+    $\phi_{H}$が条件(M\ref{itm:mra1})-(M\ref{itm:mra4})を満たすかチェック
     \begin{enumerate}[(M1)]
         \item $a,b \in \mathbb{Z}$に対して，
             \small
@@ -453,36 +465,24 @@
     \end{enumerate}
 \end{frame}
 
-% \begin{frame}[c]
-%     \frametitle{例：ハールウェーブレット$\psi_{H}$}
-%     \begin{enumerate}[(M1)]
-%             \setcounter{enumi}{2}
-%         \item \small
-%             $\displaystyle\lim_{m\to\infty} \phi_{Hm,0}(t) = \delta(t)$（$\delta(t)$：インパルス関数）の観察から，$\displaystyle\lim_{m\to\infty}V_{m}$はインパルス関数を時間シフトした集合となる．任意の$f \in L_{2}(\mathbb{R})$，$s \in \mathbb{R}$に対して$\delta(t - s) \in \displaystyle\lim_{m\to\infty}V_{m}$が存在して，
-%             \begin{align*}
-%                 \innprod{f(t)}{\delta(t - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
-%             \end{align*}
-%             だから，$f \in \displaystyle\lim_{m\to\infty}V_{m}$で$L_{2}(\mathbb{R}) \subset \displaystyle\lim_{m\to\infty}V_{m}$．一方，$\phi_{Hm,n} \in L_{2}(\mathbb{R})$だから$L_{2}(\mathbb{R})\supset \displaystyle\lim_{m\to\infty}V_{m}$．従って，$\displaystyle\lim_{m\to\infty}V_{m} = L_{2}(\mathbb{R})$．
-%             \normalsize
-%         \item $\displaystyle\lim_{m\to-\infty} \phi_{Hm,n}(t) = 0$より確かに$\displaystyle\lim_{m\to-\infty}V_{m}$は$0$しか含まない．
-%     \end{enumerate}
-% \end{frame}
-
 \begin{frame}[c]
-    \frametitle{MRAの条件から出てくる性質}
-    (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
-    \begin{align*}
-        \innprod{\phi_{m,p}}{\phi_{m,q}} &= \int_{-\infty}^{\infty} 2^{\frac{m}{2}} \phi(2^{m}t - p) \roverline{2^{\frac{m}{2}} \phi(2^{m}t - q)} \mathrm{d} t \\
-        &= 2^{m} \int_{-\infty}^{\infty} \phi(2^{m}t - p) \roverline{\phi(2^{m}t - q)} \mathrm{d} t \\
-        &= \int_{-\infty}^{\infty} \phi(s - p) \roverline{\phi(s - q)} \mathrm{d} s \quad (s = 2^{m}t) \\
-        &= \delta_{pq} \quad \text{（$\because$ $\phi$はシフトに関して正規直交）}
-    \end{align*}
-    だから，1つのスケーリング関数$\phi$が決まれば全ての$V_{m}$が張られる．
+    \frametitle{例：ハールウェーブレット$\psi_{H}$\small（説明は省略）}
+    \begin{enumerate}[(M1)]
+            \setcounter{enumi}{2}
+        \item \small
+            $\displaystyle\lim_{m\to\infty} \phi_{Hm,0}(t) = \delta(t)$（$\delta(t)$：インパルス関数）の観察から，$\displaystyle\lim_{m\to\infty}V_{m}$はインパルス関数を時間シフトした集合となる．任意の$f \in L_{2}(\mathbb{R})$，$s \in \mathbb{R}$に対して$\delta(t - s) \in \displaystyle\lim_{m\to\infty}V_{m}$が存在して，
+            \begin{align*}
+                \innprod{f(t)}{\delta(t - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
+            \end{align*}
+            だから，$f \in \displaystyle\lim_{m\to\infty}V_{m}$で$L_{2}(\mathbb{R}) \subset \displaystyle\lim_{m\to\infty}V_{m}$．一方，$\phi_{Hm,n} \in L_{2}(\mathbb{R})$だから$L_{2}(\mathbb{R})\supset \displaystyle\lim_{m\to\infty}V_{m}$．従って，$\displaystyle\lim_{m\to\infty}V_{m} = L_{2}(\mathbb{R})$．
+            \normalsize
+        \item $\displaystyle\lim_{m\to-\infty} \phi_{Hm,n}(t) = 0$より確かに$\displaystyle\lim_{m\to-\infty}V_{m}$は$0$しか含まない．
+    \end{enumerate}
 \end{frame}
 
 \begin{frame}[c]
     \frametitle{Dilation方程式（ツースケール関係）}
-    (M\ref{itm:mra2})が成立すれば，$V_{-1} \subset V_{0}$より，$\phi(t/2) \in V_{-1}$は$V_{0}$の基底$\{ \phi(t-n) | n \in \mathbb{Z} \}$の線形結合で表現できるから，
+    (M\ref{itm:mra2})が成立すれば$V_{-1} \subset V_{0}$．よって式\eqref{eq:haar_dilation_eq}で見たように，$\phi(t/2) \in V_{-1}$は$V_{0}$の基底$\{ \phi(t-n) | n \in \mathbb{Z} \}$の線形結合で表現でき，
     \begin{align}
         \phi(t/2) = \sqrt{2} \sum_{n} h[n] \phi(t - n) \label{eq:dilation_eq}
     \end{align}
@@ -547,7 +547,7 @@
     \begin{align*}
         \psi_{H}(t/2) = \phi_{H}(t) - \phi_{H}(t - 1)
     \end{align*}
-    に対応していることが確認できる．
+    に整合していることが確認できる．
 \end{frame}
 
 \subsection{高速ウェーブレット変換(FWT)}
@@ -593,14 +593,14 @@
 \begin{frame}[c]
     \frametitle{FWTの導出（展開）}
     式\eqref{eq:orth_decomp}の展開係数$p_{m}[n], q_{m}[n]$を計算するには$\phi, \psi$が必要と思えるが，\structure{実はその必要はなく，$h[n], g[n]$を用いて計算できる}．
-    \begin{mylemma}[展開係数計算]
+    \begin{mylemma}[展開計算]
         \vspace*{-15pt}
         \begin{align}
             p_{m}[n] &= \sum_{k} \roverline{h[k - 2n]} p_{m+1}[k] \label{eq:scaling_coef_updation} \\
             q_{m}[n] &= \sum_{k} \roverline{g[k - 2n]} p_{m+1}[k] \label{eq:wavelet_coef_updation}
         \end{align}
     \end{mylemma}
-    この演算は畳み込み（FIRフィルタ）に相当
+    この演算は畳み込みになっていることに注目！
 \end{frame}
 
 \begin{frame}[c]
@@ -732,7 +732,7 @@
             \draw[dspconn] (GDm_1) -- (Qm_2);
             % \draw[dspconn] (Hm_1) -- (HDm);
         \end{tikzpicture}
-        \caption{展開処理} \label{fig:decomposition_procedure}
+        \caption{展開処理．$\downarrow 2$は2倍の間引き（1個飛ばし）} \label{fig:decomposition_procedure}
     \end{figure}
     \structure{$\roverline{H}$はローパスフィルタ，$\roverline{G}$はハイパスフィルタ}
     \begin{itemize}
@@ -788,7 +788,7 @@
             \draw[dspconn] (Pm1add) -- node[above] {\small $p_{m+1}$} (HIm1);
 
         \end{tikzpicture}
-        \caption{再構成処理} \label{fig:composition_procedure}
+        \caption{再構成処理．$\uparrow 2$は2倍の補間（$0$値挿入）} \label{fig:composition_procedure}
     \end{figure}
 \end{frame}
 
@@ -836,7 +836,7 @@
         &= \int_{-\infty}^{\infty} x(2^{-M}t + 2^{-M}n) \roverline{\phi(t)} \mathrm{d} t \\
         &= \int_{-L}^{L} x(2^{-M}t + 2^{-M}n) \roverline{\phi(t)} \mathrm{d} t \quad \text{（$\because$ $\phi$はコンパクトサポート）}
     \end{align*}
-    $M$が十分大きいとき，$x$の連続性により区間$[-2^{-M}L + 2^{-M}n, 2^{-M}L + 2^{-M}n]$で$x$はほぼ一定とみなせるから（図！！），
+    $M$が十分大きいとき，$x$の連続性により区間$[-2^{-M}L + 2^{-M}n, 2^{-M}L + 2^{-M}n]$で$x$はほぼ一定とみなせるから，
     \begin{align*}
         x(2^{-M}t + 2^{-M}n) \approx x(2^{-M}n)
     \end{align*}
@@ -930,7 +930,7 @@
 
 \begin{frame}[c]
     \frametitle{他の応用}
-    NoteBook参照．以下のコンテンツを予定．
+    \myhref{https://github.com/aikiriao/introduction_to_wavelet/blob/main/implementation/fwt_demos.ipynb}{NoteBook}参照．以下のコンテンツを予定．
     \begin{itemize}
         \item 分解・再構成
         \item ノイズ除去
@@ -1101,7 +1101,7 @@
     \begin{align*}
         \lim_{u\to 0} \frac{u}{\sin\left(\frac{1}{2}\omega u\right)} = \lim_{u\to 0} \frac{1}{\frac{1}{2}\omega \cos\left(\frac{1}{2}\omega u\right)} = \frac{2}{\omega}
     \end{align*}
-    だから収束する．よって，第一項の$f$の点$x$における微分が収束すれば良いことが分かる．そしてその時，リーマン・ルベーグの補題が満たされ，式\eqref{eq:fourior_series_convergence}が成立する．
+    だから収束する．よって，第一項の$f$の点$x$における微分が収束すれば良いことが分かる．そしてその時，リーマン・ルベーグの補題の仮定が満たされ，式\eqref{eq:fourior_series_convergence}が成立する．
 \end{frame}
 
 \subsection{三角関数の完全性}
@@ -1206,17 +1206,15 @@
 \begin{frame}[c]
     \frametitle{まとめ}
     % TODO:あやしい。嘘ついちゃだめ
+    三角関数の和で$f$って表現できるの？
     \begin{itemize}
-        \item 三角関数の和で$f$って表現できるの？
-            \begin{itemize}
-                \item 周期関数であれば表現できる．
-                \item 三角関数は周期関数の直交基底．
-            \end{itemize}
-        \item できたとして，$f$にはどんな条件が必要？
-            \begin{itemize}
-                \item 各点で微分可能であることが必要．
-                \item 不連続関数でも強引に当てはめられるけど，不連続点で誤差が増大する（ギブス現象）
-            \end{itemize}
+        \item 周期関数であれば表現できる．
+        \item 三角関数は周期関数の直交基底．
+    \end{itemize}
+    できたとして，$f$にはどんな条件が必要？
+    \begin{itemize}
+        \item 各点で微分可能であることが必要．
+        \item 不連続関数でも強引に当てはめられるけど，不連続点で誤差が増大する（ギブス現象）
     \end{itemize}
 \end{frame}
 
@@ -1376,7 +1374,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
+    \frametitle{式\eqref{eq:orth_condition}の証明 補題\ref{lem:fwt_freq}}
     $h, g$の離散時間フーリエ変換を$H, G$と書き， 
     \begin{align}
         \ve{H}(\omega) := \frac{1}{\sqrt{2}}
@@ -1413,7 +1411,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
+    \frametitle{式\eqref{eq:orth_condition}の証明 補題\ref{lem:fwt_freq}}
     \begin{mylemma}[FWTの行列表現]
         $\ve{H}(\omega)$がユニタリ行列であれば，次が成り立つ：
         \small
@@ -1441,12 +1439,12 @@
         \end{align}
         \normalsize
         ここで，$P_{m}, Q_{m}$は$p_{m}, q_{m}$の離散時間フーリエ変換である．
-        \label{lem:mra_updation}
+        \label{lem:fwt_freq}
     \end{mylemma}
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
+    \frametitle{式\eqref{eq:orth_condition}の証明 補題\ref{lem:fwt_freq}}
     \scriptsize
     （証明）
     $y[n] := \sum_{k} \roverline{h[k - n]} p_{m+1}[k]$の離散時間フーリエ変換$Y(\omega)$は，
@@ -1468,7 +1466,7 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
+    \frametitle{式\eqref{eq:orth_condition}の証明 補題\ref{lem:fwt_freq}}
     \scriptsize
     式\eqref{eq:scaling_updation_in_freq}，式\eqref{eq:wavelet_updation_in_freq}の結果を行列演算で表すと，
     \begin{align*}
@@ -1651,7 +1649,7 @@
         (\Delta t)^{2} &:= \int_{-\infty}^{\infty} (t - t_{m})^{2} |f(t)|^{2} \mathrm{d}t \\
         (\Delta \omega)^{2} &:= \frac{1}{2\pi} \int_{-\infty}^{\infty} (\omega - \omega_{m})^{2} |F(\omega)|^{2} \mathrm{d}\omega 
     \end{align}
-    % Deltaの意味ってどうだっけか。パワーを推定しようとした時の
+    $\Delta t, \Delta \omega$は観測の揺らぎ幅とも解釈できる．
 \end{frame}
 
 \begin{frame}[c]
