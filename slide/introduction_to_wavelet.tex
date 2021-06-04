@@ -87,7 +87,7 @@
 }
 
 \title[ウェーブレットおきもち -- 導入と実装 --]{ウェーブレットおきもち\\-- 導入と実装 --}
-\author[aikiriao]{aikiriao}
+\author[aikiriao]{aikiriao \\ Available at: {\scriptsize \url{https://example.com}} \\ Source: {\scriptsize \url{https://github.com/aikiriao/introduction_to_wavelet}}}
 \date{\today}
 
 \begin{document}
@@ -214,7 +214,7 @@
     \end{figure}
     \vspace*{-5pt}
     \begin{align*}
-        \psi(t) = (1 - t^{2}) \exp(-t^{2})
+        \psi(t) := (1 - t^{2}) \exp(-t^{2})
     \end{align*}
 \end{frame}
 
@@ -226,7 +226,7 @@
     \end{figure}
     \vspace*{-5pt}
     \begin{align*}
-        \psi(t) &= 2\mathrm{sinc}(2t) - \mathrm{sinc}(t) \\
+        \psi(t) &:= 2\mathrm{sinc}(2t) - \mathrm{sinc}(t) \\
         \mathrm{sinc}(t) &:= \frac{\sin(\pi t)}{\pi t}
     \end{align*}
 \end{frame}
@@ -237,7 +237,7 @@
     \begin{align}
         \psi_{a,b}(t) := \frac{1}{\sqrt{a}} \psi\left( \frac{t - b}{a} \right) \label{eq:cont_wavelet}
     \end{align}
-    と書く．$a$はスケールを，$b$はシフト位置を設定．$1/\sqrt{a}$はノルムを保つための定数
+    と書く．$a$はスケール，$b$はシフト位置を設定．$1/\sqrt{a}$はノルムを保つための定数
     \footnote{（検算）$s = (t - b) / a$と置換積分すれば，
     \scriptsize
     \begin{align*}
@@ -292,7 +292,7 @@
     と展開できる．これを直交ウェーブレット変換という．
 \end{frame}
 
-\section{多重解像度解析}
+\section{多重解像度解析(MRA)}
 
 \subsection{多重解像度解析の概要}
 
@@ -467,18 +467,18 @@
 %         \item $\displaystyle\lim_{m\to-\infty} \phi_{Hm,n}(t) = 0$より確かに$\displaystyle\lim_{m\to-\infty}V_{m}$は$0$しか含まない．
 %     \end{enumerate}
 % \end{frame}
-% 
-% \begin{frame}[c]
-%     \frametitle{MRAの条件から出てくる性質}
-%     (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
-%     \begin{align*}
-%         \innprod{\phi_{m,p}}{\phi_{m,q}} &= \int_{-\infty}^{\infty} 2^{\frac{m}{2}} \phi(2^{m}t - p) \roverline{2^{\frac{m}{2}} \phi(2^{m}t - q)} \mathrm{d} t \\
-%         &= 2^{m} \int_{-\infty}^{\infty} \phi(2^{m}t - p) \roverline{\phi(2^{m}t - q)} \mathrm{d} t \\
-%         &= \int_{-\infty}^{\infty} \phi(s - p) \roverline{\phi(s - q)} \mathrm{d} s \quad (s = 2^{m}t) \\
-%         &= \delta_{pq} \quad \text{（$\because$ $\phi$はシフトに関して正規直交）}
-%     \end{align*}
-%     だから，1つのスケーリング関数$\phi$が決まれば全ての$V_{m}$が張られる．
-% \end{frame}
+
+\begin{frame}[c]
+    \frametitle{MRAの条件から出てくる性質}
+    (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
+    \begin{align*}
+        \innprod{\phi_{m,p}}{\phi_{m,q}} &= \int_{-\infty}^{\infty} 2^{\frac{m}{2}} \phi(2^{m}t - p) \roverline{2^{\frac{m}{2}} \phi(2^{m}t - q)} \mathrm{d} t \\
+        &= 2^{m} \int_{-\infty}^{\infty} \phi(2^{m}t - p) \roverline{\phi(2^{m}t - q)} \mathrm{d} t \\
+        &= \int_{-\infty}^{\infty} \phi(s - p) \roverline{\phi(s - q)} \mathrm{d} s \quad (s = 2^{m}t) \\
+        &= \delta_{pq} \quad \text{（$\because$ $\phi$はシフトに関して正規直交）}
+    \end{align*}
+    だから，1つのスケーリング関数$\phi$が決まれば全ての$V_{m}$が張られる．
+\end{frame}
 
 \begin{frame}[c]
     \frametitle{Dilation方程式（ツースケール関係）}
@@ -600,6 +600,7 @@
             q_{m}[n] &= \sum_{k} \roverline{g[k - 2n]} p_{m+1}[k] \label{eq:wavelet_coef_updation}
         \end{align}
     \end{mylemma}
+    この演算は畳み込み（FIRフィルタ）に相当
 \end{frame}
 
 \begin{frame}[c]
@@ -1372,23 +1373,6 @@
         &= \frac{1}{2} \left\{ H(\omega) \roverline{G(\omega)} + H(\omega + \pi) \roverline{G(\omega + \pi)} \right\} \quad \text{（$\because$ 式\eqref{eq:scale_orth_condition_in_freq}）}
     \end{align*}
     により示される．
-\end{frame}
-
-\begin{frame}[c]
-    \frametitle{式\eqref{eq:orth_condition}の証明 FWTの行列表現}
-    $h, g$の離散時間フーリエ変換を$H, G$と書き， 
-    \begin{align}
-        \ve{H}(\omega) := \frac{1}{\sqrt{2}}
-        \left[ \begin{array}{cc}
-            \roverline{H(\omega)} & \roverline{H(\omega + \pi)} \\
-            \roverline{G(\omega)} & \roverline{G(\omega + \pi)}
-        \end{array} \right] \label{eq:mra_updation_matrix}
-    \end{align}
-    とおく．式\eqref{eq:orth_condition}を満たすならば，$\ve{H}(\omega)$はユニタリ行列
-    \begin{align*}
-        \ve{H}^{\ast}(\omega) &= \ve{H}(\omega)^{-1}
-    \end{align*}
-    となる（$\ve{H}^{\ast}(\omega)$：$\ve{H}(\omega)$の共役転置）
 \end{frame}
 
 \begin{frame}[c]
