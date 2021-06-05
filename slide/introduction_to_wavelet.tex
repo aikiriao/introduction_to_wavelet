@@ -263,6 +263,9 @@
         &= \innprod{f(t)}{\psi_{a,b}(t)} \nonumber
     \end{align}
     変換先はスケール$a$とシフト$b$の2軸（スケログラムという）
+    \begin{itemize}
+        \item フーリエ変換の一般化（$\psi_{a,b}(t) = \exp(jat)$）に相当
+    \end{itemize}
 \end{frame}
 
 \subsection{直交ウェーブレット変換}
@@ -600,7 +603,7 @@
             q_{m}[n] &= \sum_{k} \roverline{g[k - 2n]} p_{m+1}[k] \label{eq:wavelet_coef_updation}
         \end{align}
     \end{mylemma}
-    この演算は畳み込みになっていることに注目！
+    畳み込み演算と間引きになっていることに注目！
 \end{frame}
 
 \begin{frame}[c]
