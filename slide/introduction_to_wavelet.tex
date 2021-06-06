@@ -936,8 +936,7 @@
     \myhref{https://github.com/aikiriao/introduction_to_wavelet/blob/main/implementation/fwt_demos.ipynb}{NoteBook}参照．以下のコンテンツを予定．
     \begin{itemize}
         \item 分解・再構成
-        \item ノイズ除去
-        \item 圧縮
+        \item 圧縮（エントロピー観察）
     \end{itemize}
 \end{frame}
 
@@ -1178,8 +1177,8 @@
     \end{align*}
     2項目については，連続な関数は有界だから$|f(x)| < L\ (a \leq x \leq b)$を満たす定数$L$が存在する仮定のもと，
     \begin{align*}
-        \left| \int_{x_{k}}^{x_{k+1}} f(x_{k}) \sin(Nx) \mathrm{d} x \right| &\leq |f(x_{k})| \left| \int_{x_{k}}^{x_{k+1}} \sin(Nx) \mathrm{d} x \right| \\
-        &\leq |f(x_{k})| \left| \left[ -\frac{1}{N} \cos(Nx) \right]_{x_{k}}^{x_{k+1}} \right| \\
+        \left| \int_{x_{k}}^{x_{k+1}} f(x_{k}) \sin(Nx) \mathrm{d} x \right| &\leq \max_{x \in [x_{k},x_{k+1}]} |f(x)| \left| \int_{x_{k}}^{x_{k+1}} \sin(Nx) \mathrm{d} x \right| \\
+        &\leq \max_{x \in [x_{k},x_{k+1}]} |f(x)| \left| \left[ -\frac{1}{N} \cos(Nx) \right]_{x_{k}}^{x_{k+1}} \right| \\
         &< L \left| -\frac{1}{N} \left[ \cos(Nx) \right]_{x_{k}}^{x_{k+1}} \right| \\
         &\leq \frac{2L}{N}
     \end{align*}
