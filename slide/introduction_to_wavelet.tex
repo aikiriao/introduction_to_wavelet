@@ -26,6 +26,8 @@
 \usetikzlibrary{dsp,positioning,calc,backgrounds}
 \usepackage{amsthm}
 
+\usepackage{qrcode}
+
 % 日本語をゴシック体に
 \renewcommand{\kanjifamilydefault}{\gtdefault}
 
@@ -89,7 +91,7 @@
 }
 
 \title[ウェーブレットおきもち -- 導入と実装 --]{ウェーブレットおきもち\\-- 導入と実装 --}
-\author[aikiriao]{aikiriao \\ Available at: {\scriptsize \myurl{https://example.com}} \\ Source: {\scriptsize \myurl{https://github.com/aikiriao/introduction_to_wavelet}}}
+\author[aikiriao]{Available at: \qrcode[hyperlink,height=20mm]{http://www.ctan.org}\\ Source: {\scriptsize \myurl{https://github.com/aikiriao/introduction_to_wavelet}}}
 \date{\today}
 
 \begin{document}
@@ -921,7 +923,7 @@
     \lstinputlisting[language={Python}, linerange={97-111,99999-999999}, firstnumber=97, label=ifwt2d]{../implementation/fwt.py}
 \end{frame}
 
-\subsection{静止画への適用}
+\subsection{応用例}
 
 \begin{frame}[c]
     \frametitle{静止画の分解}
