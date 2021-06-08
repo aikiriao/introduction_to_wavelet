@@ -696,27 +696,27 @@
             % Blocks and nodes
             \node(input) {};
 
-            \node[dspfilter, right=of input, right=3.0*\dspvspace, fill=white] (Hm1) {$\roverline{H}$};
+            \node[dspfilter, right=of input, right=3.0*\dspvspace] (Hm1) {$\roverline{H}$};
             \node[dspnodefull] (Pm1node) at ($(input)!0.5!(Hm1)$) {};
-            \node[dspfilter, below=of Pm1node, below=1.0*\dspvspace, fill=white] (Gm1) {$\roverline{G}$};
-            \node[dspfilter, below=of Gm1, below=0.6*\dspvspace, fill=white] (GDm1) {$\downarrow 2$};
-            \node[below=of GDm1, below=1.0*\dspvspace, fill=white] (Qm) {\small $q_{m}$};
-            \node[dspfilter, right=of Hm1, right=0.6*\dspvspace, fill=white] (HDm1) {$\downarrow 2$};
+            \node[dspfilter, below=of Pm1node, below=1.0*\dspvspace] (Gm1) {$\roverline{G}$};
+            \node[dspfilter, below=of Gm1, below=0.6*\dspvspace] (GDm1) {$\downarrow 2$};
+            \node[below=of GDm1, below=1.0*\dspvspace] (Qm) {\small $q_{m}$};
+            \node[dspfilter, right=of Hm1, right=0.6*\dspvspace] (HDm1) {$\downarrow 2$};
 
-            \node[dspfilter, right=of HDm1, right=3.0*\dspvspace, fill=white] (Hm) {$\roverline{H}$};
+            \node[dspfilter, right=of HDm1, right=3.0*\dspvspace] (Hm) {$\roverline{H}$};
             \node[dspnodefull] (Pmnode) at ($(HDm1)!0.5!(Hm)$) {};
-            \node[dspfilter, below=of Pmnode, below=1.0*\dspvspace, fill=white] (Gm) {$\roverline{G}$};
-            \node[dspfilter, below=of Gm, below=0.6*\dspvspace, fill=white] (GDm) {$\downarrow 2$};
-            \node[below=of GDm, below=1.0*\dspvspace, fill=white] (Qm_1) {\small $q_{m-1}$};
-            \node[dspfilter, right=of Hm, right=0.6*\dspvspace, fill=white] (HDm) {$\downarrow 2$};
+            \node[dspfilter, below=of Pmnode, below=1.0*\dspvspace] (Gm) {$\roverline{G}$};
+            \node[dspfilter, below=of Gm, below=0.6*\dspvspace] (GDm) {$\downarrow 2$};
+            \node[below=of GDm, below=1.0*\dspvspace] (Qm_1) {\small $q_{m-1}$};
+            \node[dspfilter, right=of Hm, right=0.6*\dspvspace] (HDm) {$\downarrow 2$};
 
-            % \node[dspfilter, right=of HDm, right=3.0*\dspvspace, fill=white] (Hm_1) {$\roverline{H}$};
-            \node[right=of HDm, right=3.0*\dspvspace, fill=white] (Hm_1) {};
+            % \node[dspfilter, right=of HDm, right=3.0*\dspvspace] (Hm_1) {$\roverline{H}$};
+            \node[right=of HDm, right=3.0*\dspvspace] (Hm_1) {};
             \node[dspnodefull] (Pm_1node) at ($(HDm)!0.5!(Hm_1)$) {};
-            \node[dspfilter, below=of Pm_1node, below=1.0*\dspvspace, fill=white] (Gm_1) {$\roverline{G}$};
-            \node[dspfilter, below=of Gm_1, below=0.6*\dspvspace, fill=white] (GDm_1) {$\downarrow 2$};
-            \node[below=of GDm_1, below=1.0*\dspvspace, fill=white] (Qm_2) {\small $q_{m-2}$};
-            % \node[dspfilter, right=of Hm, right=0.6*\dspvspace, fill=white] (HDm_1) {$\downarrow 2$};
+            \node[dspfilter, below=of Pm_1node, below=1.0*\dspvspace] (Gm_1) {$\roverline{G}$};
+            \node[dspfilter, below=of Gm_1, below=0.6*\dspvspace] (GDm_1) {$\downarrow 2$};
+            \node[below=of GDm_1, below=1.0*\dspvspace] (Qm_2) {\small $q_{m-2}$};
+            % \node[dspfilter, right=of Hm, right=0.6*\dspvspace] (HDm_1) {$\downarrow 2$};
 
             % Connections
             \draw[dspconn] (input) -- node[above] {\small $p_{m+1}$} (Hm1);
@@ -759,21 +759,21 @@
             % Blocks and nodes
             \node(input) {};
 
-            \node[dspfilter, right=of input, right=2.0*\dspvspace, fill=white] (HIm_1) {$\uparrow 2$};
-            \node[dspfilter, right=of HIm_1, right=0.6*\dspvspace, fill=white] (Hm_1) {$H$};
-            \node[dspadder, right=of Hm_1, right=1.0*\dspvspace, fill=white] (Pmadd) {};
-            \node[dspfilter, below=of Pmadd, below=1.0*\dspvspace, fill=white] (Gm_1) {$G$};
-            \node[dspfilter, below=of Gm_1, below=0.6*\dspvspace, fill=white] (GIm_1) {$\uparrow 2$};
-            \node[below=of GIm_1, below=1.0*\dspvspace, fill=white] (Qm_1) {\small $q_{m-1}$};
+            \node[dspfilter, right=of input, right=2.0*\dspvspace] (HIm_1) {$\uparrow 2$};
+            \node[dspfilter, right=of HIm_1, right=0.6*\dspvspace] (Hm_1) {$H$};
+            \node[dspadder, right=of Hm_1, right=1.0*\dspvspace] (Pmadd) {};
+            \node[dspfilter, below=of Pmadd, below=1.0*\dspvspace] (Gm_1) {$G$};
+            \node[dspfilter, below=of Gm_1, below=0.6*\dspvspace] (GIm_1) {$\uparrow 2$};
+            \node[below=of GIm_1, below=1.0*\dspvspace] (Qm_1) {\small $q_{m-1}$};
 
-            \node[dspfilter, right=of Pmadd, right=2.0*\dspvspace, fill=white] (HIm) {$\uparrow 2$};
-            \node[dspfilter, right=of HIm, right=0.6*\dspvspace, fill=white] (Hm) {$H$};
-            \node[dspadder, right=of Hm, right=1.0*\dspvspace, fill=white] (Pm1add) {};
-            \node[dspfilter, below=of Pm1add, below=1.0*\dspvspace, fill=white] (Gm) {$G$};
-            \node[dspfilter, below=of Gm, below=0.6*\dspvspace, fill=white] (GIm) {$\uparrow 2$};
-            \node[below=of GIm, below=1.0*\dspvspace, fill=white] (Qm) {\small $q_{m}$};
+            \node[dspfilter, right=of Pmadd, right=2.0*\dspvspace] (HIm) {$\uparrow 2$};
+            \node[dspfilter, right=of HIm, right=0.6*\dspvspace] (Hm) {$H$};
+            \node[dspadder, right=of Hm, right=1.0*\dspvspace] (Pm1add) {};
+            \node[dspfilter, below=of Pm1add, below=1.0*\dspvspace] (Gm) {$G$};
+            \node[dspfilter, below=of Gm, below=0.6*\dspvspace] (GIm) {$\uparrow 2$};
+            \node[below=of GIm, below=1.0*\dspvspace] (Qm) {\small $q_{m}$};
 
-            \node[right=of Pm1add, right=2.0*\dspvspace, fill=white] (HIm1) {};
+            \node[right=of Pm1add, right=2.0*\dspvspace] (HIm1) {};
 
             % Connections
             \draw[dspconn] (input) -- node[above] {\small $p_{m-1}$} (HIm_1);
