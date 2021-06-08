@@ -597,7 +597,7 @@
 
 \begin{frame}[c]
     \frametitle{FWTの導出（展開）}
-    式\eqref{eq:orth_decomp}の展開係数$p_{m}[n], q_{m}[n]$を計算するには$\phi, \psi$が必要と思えるが，\structure{実はその必要はなく，$h[n], g[n]$を用いて計算できる}．
+    \structure{式\eqref{eq:orth_decomp}の展開係数$p_{m}[n], q_{m}[n]$は$h[n], g[n]$を用いて計算できる}．
     \begin{mylemma}[展開計算]
         \vspace*{-15pt}
         \begin{align}
@@ -631,7 +631,7 @@
 
 \begin{frame}[c]
     \frametitle{FWTの導出（再構成）}
-    逆に，\structure{$h[n], g[n]$を用いて$p_{m}[n], q_{m}[n]$から$p_{m+1}[n]$を再構成できる}．
+    逆に，\structure{$p_{m}[n], q_{m}[n]$から$p_{m+1}[n]$を再構成できる}．
     \begin{mylemma}[再構成計算]
         \vspace*{-15pt}
         \begin{align}
@@ -935,9 +935,9 @@
 
 \begin{frame}[c]
     \frametitle{他の応用}
-    \myhref{https://github.com/aikiriao/introduction_to_wavelet/blob/main/implementation/fwt_demos.ipynb}{NoteBook}参照．以下のコンテンツを予定．
+    NoteBook\footnote{\myurl{https://github.com/aikiriao/introduction_to_wavelet/blob/main/implementation/fwt_demos.ipynb}}参照．以下のコンテンツを予定．
     \begin{itemize}
-        \item 分解・再構成
+        \item 静止画の分解・再構成
         \item ノイズ（欠損）除去
         \item 圧縮（エントロピー観察）
     \end{itemize}
