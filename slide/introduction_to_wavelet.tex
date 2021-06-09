@@ -156,7 +156,7 @@
 
 \begin{frame}[c]
     \frametitle{関数空間の例：フーリエ級数}
-    周期$T=2\pi/\omega$の関数$f$のフーリエ級数
+    周期$T=2\pi/\omega$の関数$f$のフーリエ級数：
     \begin{align}
         \left\{
             \begin{array}{l}
@@ -165,16 +165,19 @@
             \end{array}
         \right. \label{eq:fourior_seq}
     \end{align}
-    $f(t)$を$\exp(jn\omega t)$で展開していると見える．\structure{$\frac{1}{\sqrt{T}}\exp(jn\omega t)$は正規直交基底をなしている}\footnote{ここでは天下りとする．補足の補題\ref{lem:triangle_completeness}を参照}．
+    \structure{$f(t)$の$\exp(jn\omega t)$による直交展開}
+    \begin{itemize}
+        \item $\frac{1}{\sqrt{T}}\exp(jn\omega t)$は周期$T$の関数の正規直交基底\footnote{補足の補題\ref{lem:triangle_completeness}を参照}なので可能
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[c]
     \frametitle{関数空間の例：フーリエ級数}
-    フーリエ係数$c_{n}$は$\exp$との内積の定数倍．
+    フーリエ係数$c_{n}$は$\exp$との内積の定数倍
     \begin{align}
-        c_{n} = \frac{1}{T} \innprod{f(t)}{\exp(jn\omega t)}
+        c_{n} = \frac{1}{\sqrt{T}} \innprod{f(t)}{\frac{1}{\sqrt{T}}\exp(jn\omega t)}
     \end{align}
-    $n\omega$の周波数成分との類似度を測っている．
+    だから，$n\omega$の周波数成分との類似度に相当
     \begin{figure}
         \includegraphics[width=90mm]{./figs/fourior_function_projection.png}
     \end{figure}
@@ -233,6 +236,14 @@
         \psi(t) &:= 2\mathrm{sinc}(2t) - \mathrm{sinc}(t) \\
         \mathrm{sinc}(t) &:= \frac{\sin(\pi t)}{\pi t}
     \end{align*}
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{連続ウェーブレット変換}
+    何故ウェーブレットを使うのか？
+    \begin{itemize}
+        \item TODO:
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[c]
@@ -487,7 +498,7 @@
 
 \begin{frame}[c]
     \frametitle{Dilation方程式（ツースケール関係）}
-    (M\ref{itm:mra2})が成立すれば$V_{-1} \subset V_{0}$．よって式\eqref{eq:haar_dilation_eq}で見たように，$\phi(t/2) \in V_{-1}$は$V_{0}$の基底$\{ \phi(t-n) | n \in \mathbb{Z} \}$の線形結合で表現でき，
+    (M\ref{itm:mra2})が成立すれば$V_{-1} \subset V_{0}$．よって$\phi(t/2) \in V_{-1}$は$V_{0}$の基底$\{ \phi(t-n) | n \in \mathbb{Z} \}$の線形結合で表現でき，
     \begin{align}
         \phi(t/2) = \sqrt{2} \sum_{n} h[n] \phi(t - n) \label{eq:dilation_eq}
     \end{align}
@@ -509,7 +520,7 @@
         W_{m} := \left\{ \sum_{n} c_{n} \psi_{m,n}(t) \middle| c_{n} \in l_{2}(\mathbb{Z}) \right\}
     \end{align}
     % TODO: ここで、どのように構成すべきか指針を述べるのがいいかも。
-    $V_{m} \oplus W_{m} = V_{m+1}$だから，$W_{m}$は$V_{m} \perp W_{m}$\footnote{$V_{m}, W_{m}$それぞれから選んだ任意の元が直交している}を満さなければならない．
+    $V_{m} \oplus W_{m} = V_{m+1}$だから，$W_{m}$は$V_{m} \perp W_{m}$\footnote{$V_{m}, W_{m}$それぞれから選んだ任意の元（関数）が直交している}を満さなければならない．
     その成立条件を見ていこう．
 \end{frame}
 
@@ -867,7 +878,7 @@
     注意点
     \begin{itemize}
         \item スケールは$2$の指数に限る（FFTは等間隔スケール）
-        \item 不確定性原理（補足参照）を超越したわけではない
+        \item 不確定性原理（補足参照）には縛られる
     \end{itemize}
 \end{frame}
 
@@ -1106,7 +1117,7 @@
     \begin{align*}
         \lim_{u\to 0} \frac{u}{\sin\left(\frac{1}{2}\omega u\right)} = \lim_{u\to 0} \frac{1}{\frac{1}{2}\omega \cos\left(\frac{1}{2}\omega u\right)} = \frac{2}{\omega}
     \end{align*}
-    だから収束する．よって，第一項の$f$の点$x$における微分が収束すれば良いことが分かる．そしてその時，リーマン・ルベーグの補題の仮定が満たされ，式\eqref{eq:fourior_series_convergence}が成立する．
+    だから収束する．よって，第一項の$f$の点$x$における微分が収束すれば良いことが分かる．そしてその時，リーマン・ルベーグの補題の仮定が満たされ，収束定理が成立する．
 \end{frame}
 
 \subsection{三角関数の完全性}
