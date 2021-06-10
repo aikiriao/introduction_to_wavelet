@@ -518,12 +518,11 @@
 
 \begin{frame}[c]
     \frametitle{MRAのウェーブレット関数}
-    $W_{m}$はスケール$m$のウェーブレットから張られるように定める：
+    $W_{m} = V_{m+1} \ominus V_{m}$より，$W_{m}$はスケール$m$のウェーブレットから張られるように定める：
     \begin{align}
         W_{m} := \left\{ \sum_{n} c_{n} \psi_{m,n}(t) \middle| c_{n} \in l_{2}(\mathbb{Z}) \right\}
     \end{align}
-    % TODO: ここで、どのように構成すべきか指針を述べるのがいいかも。
-    $V_{m} \oplus W_{m} = V_{m+1}$だから，$W_{m}$は$V_{m} \perp W_{m}$\footnote{$V_{m}, W_{m}$それぞれから選んだ任意の元（関数）が直交している}を満さなければならない．
+    このとき，$W_{m}$は$V_{m} \perp W_{m}$\footnote{$V_{m}, W_{m}$それぞれから選んだ任意の元（関数）が直交している}を満さなければならない．
     その成立条件を見ていこう．
 \end{frame}
 
