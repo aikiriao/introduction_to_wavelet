@@ -239,11 +239,22 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{連続ウェーブレット変換}
-    何故ウェーブレットを使うのか？
+    \frametitle{何故ウェーブレットを使うのか？}
     \begin{itemize}
-        \item TODO:
+        \item フーリエ級数は時間的に局在する信号の解析は苦手
+            \begin{itemize}
+                \item フーリエ級数は定常な信号（三角関数）による基底分解手法
+                \item 時間のズレは位相をずらすことにより表現
+            \end{itemize}
+        \item フーリエ解析だと厳しいケースの例
+            \begin{enumerate}
+                \item 単一インパルスは全周波数で係数が等しくなり，\underline{どこに}インパルスがあるか不明
+                \item 周波数が時間に応じて変化する場合（例：スイープ信号）も，周波数は解析区間で一定として解析
+            \end{enumerate}
     \end{itemize}
+    \begin{block}{}
+        ウェーブレットは，基底の中に時間的な局在性を入れて問題解決を図る
+    \end{block}
 \end{frame}
 
 \begin{frame}[c]
