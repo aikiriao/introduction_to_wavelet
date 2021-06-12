@@ -317,11 +317,7 @@
 \begin{frame}[c]
     \frametitle{多重解像度解析(MRA)の概要}
     \structure{多重解像度解析(MRA\footnote{MultiResolution Analysis})}は直交ウェーブレット変換の手法のひとつ．
-    対象の信号を様々なスケール（解像度）に分解して解析を行う．
-\end{frame}
-
-\begin{frame}[c]
-    \frametitle{多重解像度解析(MRA)の概要}
+    \par
     スケール$M$の信号$f^{(M)}(t)$を1つスケールの落とした信号$f^{(M-1)}(t)$と誤差信号$g^{(M-1)}(t)$の和で表すことを考える：
     \begin{align}
         f^{(M)}(t) = f^{(M-1)}(t) + g^{(M-1)}(t) \label{eq:mra_decomp_onescale}
@@ -394,9 +390,9 @@
             \begin{itemize}
                 \item[M\ref{itm:mra2}お気持ち] $V_{m}$は入れ子構造をなしている．
                     \begin{figure}
-                        \includegraphics[width=70mm]{./figs/mra_scaling_set.png}
+                        \includegraphics[width=61mm]{./figs/mra_scaling_set.png}
                     \end{figure}
-                    解像度$m$を上げると表現可能な信号が増える
+                    スケール$m$を上げると表現可能な信号が増える
             \end{itemize}
             \newpage
         \item \label{itm:mra3} $\roverline{\bigcup_{m} V_{m}} = L_{2}(\mathbb{R})$（$\roverline{A}$：集合$A$の閉包）
@@ -405,7 +401,7 @@
             \end{itemize}
         \item \label{itm:mra4} $\bigcap_{m} V_{m} = \{ 0 \}$
             \begin{itemize}
-                \item[M\ref{itm:mra4}お気持ち] $\displaystyle\lim_{m \to -\infty} V_{m} = \{ 0 \}$であること，つまり，解像度を極限まで落とすと$V_{m}$に含まれる信号は定値関数$0$のみになる
+                \item[M\ref{itm:mra4}お気持ち] $\displaystyle\lim_{m \to -\infty} V_{m} = \{ 0 \}$であること，つまり，スケールを極限まで落とすと$V_{m}$に含まれる信号は定値関数$0$のみになる
             \end{itemize}
     \end{enumerate}
 \end{frame}
@@ -512,7 +508,7 @@
     \frametitle{MRAのウェーブレット関数}
     (M\ref{itm:mra2})より$V_{m} \subset V_{m+1}$だから，$V_{m} \oplus W_{m} = V_{m+1}$ （$\oplus$：直和）となる$W_{m}$が存在する：\\
     \begin{figure}
-        \includegraphics[width=70mm]{./figs/mra_scaling_wavelet_set.png}
+        \includegraphics[width=80mm]{./figs/mra_scaling_wavelet_set.png}
     \end{figure}
 \end{frame}
 
@@ -588,7 +584,7 @@
 
 \begin{frame}[c]
     \frametitle{MRAの直交ウェーブレット変換}
-    式\eqref{eq:orth_directsum_decomposition}，(M\ref{itm:mra3})（$\lim_{m\to\infty} V_{m} = L_{2}(\mathbb{R})$），$V_{m} \perp W_{m}\ (m \in \mathbb{Z})$より，任意の$x(t) \in L_{2}(\mathbb{R})$は以下のように直交展開できる：
+    任意の$x(t) \in L_{2}(\mathbb{R})$は以下のように直交展開できる\footnote{$\because$ 式\eqref{eq:orth_directsum_decomposition}，(M\ref{itm:mra3})（$\lim_{m\to\infty} V_{m} = L_{2}(\mathbb{R})$），$V_{m} \perp W_{m}\ (m \in \mathbb{Z})$より}：
     \begin{align}
         x(t) = \underbrace{\sum_{n} p_{J}[n] \phi_{J,n}(t)}_{\in V_{J}} + \sum_{m=J}^{\infty} \underbrace{\sum_{n} q_{m}[n] \psi_{m,n}(t)}_{\in W_{m}} \label{eq:orth_decomp}
     \end{align}
@@ -816,7 +812,7 @@
         FWTの時間的計算量は，入力データ個数$N$に対して$\mathcal{O}(N)$．
     \end{block}
     \scriptsize
-    （証明）$p_{M}[n]$が$N$個のデータからなり，$H, G$を長さ$L$のFIRフィルタとすると，各解像度における積和演算回数は次のようになる：
+    （証明）$p_{M}[n]$が$N$個のデータからなり，$H, G$を長さ$L$のFIRフィルタとすると，各スケールにおける積和演算回数は次のようになる：
     \begin{itemize}
         \item[1段目] $p_{M-1}[n]$は$N/2$個のデータからなるため，$p_{M-1}[n]$の計算で$NL/2$回の積和演算，$q_{M-1}[n]$の計算で$NL/2$回の積和演算 $\Rightarrow$ 計$NL$回
         \item[2段目] $p_{M-2}[n]$は$N/4$個のデータからなるため，$p_{M-2}[n]$の計算で$NL/4$回の積和演算，$q_{M-2}[n]$の計算で$NL/4$回の積和演算 $\Rightarrow$ 計$NL/2$回
