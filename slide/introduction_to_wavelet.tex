@@ -112,7 +112,7 @@
     \begin{figure}
         \includegraphics[width=90mm]{./figs/function_is_vector.png}
     \end{figure}
-    関数のゼロベクトルを${ }^{\forall} t \ 0(t) := 0$で定める．
+    関数のゼロベクトルを${ }^{\forall} x \ 0(x) := 0$で定める．
 \end{frame}
 
 \begin{frame}[c]
@@ -366,9 +366,6 @@
         \phi_{m,n}(t) &:= 2^{\frac{m}{2}}\phi(2^{m}t - n)
     \end{align}
     を基に構成される\footnote{$l_{2}(\mathbb{Z})$は二乗総和可能な数列($\sum_{n} |c_{n}|^{2} < \infty$)の集合}\footnote{文献によっては$m$の符号が逆転しているので注意！}．$\phi$を\structure{スケーリング関数(scaling function)}という．
-    \begin{itemize}
-        \item $V_{m}$はスケール$m$の信号の基底系
-    \end{itemize}
 \end{frame}
 
 \begin{frame}[c, allowframebreaks]
@@ -572,7 +569,7 @@
     \begin{align*}
         \psi_{H}(t/2) = \phi_{H}(t) - \phi_{H}(t - 1)
     \end{align*}
-    に整合していることが確認できる．
+    $\phi_{H}$の定義から$\psi_{H}$が得られた．
 \end{frame}
 
 \subsection{高速ウェーブレット変換(FWT)}
@@ -608,7 +605,7 @@
     \begin{align}
         x(t) \approx \sum_{n} p_{J}[n] \phi_{J,n}(t) + \sum_{m=J}^{M-1}\sum_{n} q_{m}[n] \psi_{m,n}(t) \label{eq:orth_approx}
     \end{align}
-    ここで，$f^{(m)}(t) := \sum_{n} p_{m} \phi_{m,n}(t)$，$g^{(m)}(t) := \sum_{n} q_{m}[n] \psi_{m,n}(t)$とすると
+    ここで，$f^{(m)}(t) := \sum_{n} p_{m}[n] \phi_{m,n}(t)$，$g^{(m)}(t) := \sum_{n} q_{m}[n] \psi_{m,n}(t)$とすると
     \begin{align*}
         x(t) \approx f^{(J)}(t) + \sum_{m=J}^{M-1} g^{(m)}(t)
     \end{align*}
@@ -854,7 +851,7 @@
 \begin{frame}[c]
     \frametitle{展開係数の入力による近似}
     \scriptsize
-    （証明）$\phi$は仮定より，ある範囲$[-L,L]$だけで非ゼロ値を持つ．このとき$p_{M}[n]$は，
+    （証明）$\phi$は仮定より，ある範囲$[-L,L]$の外では常に$0$として考える．このとき$p_{M}[n]$は，
     \begin{align*}
         p_{M}[n] &= \innprod{x}{\phi_{M,n}} = \int_{-\infty}^{\infty} x(s) \roverline{\phi_{M,n}(s)} \mathrm{d} s = \int_{-\infty}^{\infty} x(s) \roverline{2^{M}\phi(2^{M}s - n)} \mathrm{d} s \\
         &= \int_{-\infty}^{\infty} x(2^{-M}t + 2^{-M}n) \roverline{2^{M}\phi(t)} 2^{-M} \mathrm{d} t \quad (t = 2^{M}s - n) \\
