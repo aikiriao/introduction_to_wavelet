@@ -122,7 +122,7 @@
         \innprod{f(x)}{g(x)} &:= \int_{a}^{b} f(x) \roverline{g(x)} \mathrm{d}x \label{eq:function_innerprod} \\
         \roverline{g(x)} &: \text{$g(x)$の複素共役} \nonumber
     \end{align}
-    積分範囲$[a,b]$は対象により変わる．積分変数を省略して$\innprod{f}{g}$とも書く．考え方は，（可算）次元ベクトルと同じ：
+    積分範囲$[a,b]$は対象により変わる．積分変数を省略して$\innprod{f}{g}$とも書く．考え方は，有限次元ベクトルと同じ：
     \begin{align*}
         \innprod{\ve{v}}{\ve{w}} := \sum_{n} (\ve{v})_{n} \roverline{(\ve{w})_{n}}
     \end{align*}
@@ -149,7 +149,7 @@
     \begin{align*}
         \norm{f}{2}^{2} = \int_{-\infty}^{\infty} |f(x)|^{2} \mathrm{d}x < \infty
     \end{align*}
-    な関数$f:\mathbb{R} \to \mathbb{C}$の集合は関数空間をなす．$L_{2}(\mathbb{R})$と書く．
+    な関数$f:\mathbb{R} \to \mathbb{C}$の集合は関数空間をなす．これを$L_{2}(\mathbb{R})$と書く．
 \end{frame}
 
 \subsection{関数空間の例：フーリエ級数}
@@ -396,7 +396,7 @@
             \newpage
         \item \label{itm:mra2} $V_{m} \subset V_{m+1}$
             \begin{itemize}
-                \item[M\ref{itm:mra2}お気持ち] $V_{m}$は入れ子構造をなしている．
+                \item[M\ref{itm:mra2}お気持ち] $V_{m}$は入れ子構造をなす．
                     \begin{figure}
                         \includegraphics[width=61mm]{./figs/mra_scaling_set.png}
                     \end{figure}
@@ -527,7 +527,7 @@
         W_{m} := \left\{ \sum_{n} c_{n} \psi_{m,n}(t) \middle| c_{n} \in l_{2}(\mathbb{Z}) \right\}
     \end{align}
     このとき，$W_{m}$は$V_{m} \perp W_{m}$\footnote{$V_{m}, W_{m}$それぞれから選んだ任意の元（関数）が直交している}を満さなければならない．
-    その成立条件を見ていこう．
+    その成立条件を見ていく．
 \end{frame}
 
 \begin{frame}[c]
@@ -569,7 +569,7 @@
     \begin{align*}
         \psi_{H}(t/2) = \phi_{H}(t) - \phi_{H}(t - 1)
     \end{align*}
-    $\phi_{H}$の定義から$\psi_{H}$が得られた．
+    $\phi_{H}$から$\psi_{H}$が得られた．
 \end{frame}
 
 \subsection{高速ウェーブレット変換(FWT)}
