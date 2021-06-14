@@ -27,13 +27,13 @@ jobs:
 
       - name: Unzip downloaded package
         run: |
-          unzip tikz-dsp.zip
+          unzip tikz-dsp.zip -d slide/tikz-dsp
           
       # スライドビルド
       - name: Build Slide
         uses: xu-cheng/latex-action@v2
         env:
-          TEXINPUTS: ".:../tikz-dsp/library/tex/latex/tikz-dsp//:"
+          TEXINPUTS: ".:./tikz-dsp/library/tex/latex/tikz-dsp//:"
         with:
           working_directory: ./slide
           root_file: introduction_to_wavelet.tex
