@@ -1,4 +1,4 @@
-name: PythonCI
+name: Python CI
 
 on:
   # push/pull時に実行
@@ -17,10 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # 準備
+      - name: Install dependencies
+        run: |
+          pip install pylint numpy scipy
+
       # Pylint
       - name: Pylint
         run: |
-          pip install pylint
           cd implementation
           pylint fwt.py
 
