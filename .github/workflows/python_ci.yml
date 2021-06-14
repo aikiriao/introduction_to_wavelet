@@ -1,0 +1,31 @@
+name: PythonCI
+
+on:
+  # push/pull時に実行
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # 手動実行も可
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Pylint
+      - name: Pylint
+        run: |
+          pip install pylint
+          cd implementation
+          pylint fwt.py
+
+      # Python unit test
+      - name: Unit Test
+        run: |
+          cd implementation
+          python test_fwt.py
