@@ -20,7 +20,7 @@ jobs:
       # 準備
       - name: Install dependencies
         run: |
-          pip install pylint numpy scipy
+          pip install pylint numpy scipy PIL
 
       # Pylint
       - name: Pylint
