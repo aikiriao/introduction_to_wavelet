@@ -24,4 +24,4 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: ./slide/introduction_to_wavelet.tex
-          args: -pdfdvi -latex=platex -synctex=1 -e $dvipdf='dvipdfmx %O %S';$bibtex='bibtex';$makeindex='mendex';
+          args: -pdfdvi -latex=platex -synctex=1 -e "$dvipdf='dvipdfmx %O %S';$bibtex='bibtex';$makeindex='mendex';"
