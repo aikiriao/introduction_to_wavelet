@@ -18,10 +18,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      # tikzでdspスタイルを使っているので落としてくる
+      - name: Download tikz-dsp style file
+        run: |
+          curl -OL http://www.texample.net/media/tikz/examples/zip/tikz-dsp.zip
+          unzip tikz-dsp.zip
         
       # スライドビルド
-      - name: Github Action for LaTeX
+      - name: Build Slide
         uses: xu-cheng/latex-action@v2
+        env:
+          TEXINPUTS: ".:./tikz-dsp//:"
         with:
           working_directory: ./slide
           root_file: introduction_to_wavelet.tex
