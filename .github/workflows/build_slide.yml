@@ -10,21 +10,20 @@ on:
   # 手動実行も可
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # "build" ジョブ
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
-      # tikzでdspスタイルを使っているので落としてくる
+      # 追加のスタイルファイルの導入
       - name: Download extra style file
         uses: wei/wget@v1.1.1
         with:
           args: http://www.texample.net/media/tikz/examples/zip/tikz-dsp.zip https://github.com/h-kitagawa/plistings/archive/master.zip
 
+      # パッケージの展開
       - name: Unzip downloaded package
         run: |
           unzip tikz-dsp.zip -d slide/tikz-dsp
@@ -39,3 +38,9 @@ jobs:
           working_directory: ./slide
           root_file: introduction_to_wavelet.tex
           args: -pdfdvi -latex=platex
+
+      # 成果物のアップロード
+      - uses: actions/upload-artifact@v2
+        with:
+          name: PDF
+          path: ./slide/introduction_to_wavelet.pdf
