@@ -18,13 +18,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       # tikzでdspスタイルを使っているので落としてくる
-      - name: Download tikz-dsp style file
+      - name: Download extra style file
+        uses: wei/wget@v1.1.1
+        with:
+          args: http://www.texample.net/media/tikz/examples/zip/tikz-dsp.zip
+
+      - name: Unzip downloaded package
         run: |
-          curl -OL http://www.texample.net/media/tikz/examples/zip/tikz-dsp.zip
           unzip tikz-dsp.zip
-        
+          
       # スライドビルド
       - name: Build Slide
         uses: xu-cheng/latex-action@v2
