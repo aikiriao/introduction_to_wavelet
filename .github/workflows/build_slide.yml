@@ -33,7 +33,7 @@ jobs:
       - name: Build Slide
         uses: xu-cheng/latex-action@v2
         env:
-          TEXINPUTS: ".:./tikz-dsp/library/tex/latex/tikz-dsp//:"
+          TEXINPUTS: ".:../tikz-dsp/library/tex/latex/tikz-dsp//:"
         with:
           working_directory: ./slide
           root_file: introduction_to_wavelet.tex
