@@ -23,5 +23,6 @@ jobs:
       - name: Github Action for LaTeX
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: ./slide/introduction_to_wavelet.tex
+          working_directory: ./slide
+          root_file: introduction_to_wavelet.tex
           args: -pdfdvi -latex=platex
