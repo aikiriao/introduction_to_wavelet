@@ -113,21 +113,21 @@ def ifwt2d(src2d_ll, src2d_hl, src2d_lh, src2d_hh, scaling_coef):
 
 def fwt2d_mra(src2d, max_level, scaling_coef):
     """ 2次元高速ウェーブレット変換による多重解像度解析 """
-    image_octabe = []
+    image_octave = []
     # 低域/低域(out_ll)の分解を繰り返す
     out_ll = src2d
     for _ in range(max_level):
         out_ll, out_hl, out_lh, out_hh = fwt2d(out_ll, scaling_coef)
         # 先頭に一番解像度の低い情報が来るように、先頭に追記
-        image_octabe.insert(0, [out_hl, out_lh, out_hh])
-    return [out_ll, image_octabe]
+        image_octave.insert(0, [out_hl, out_lh, out_hh])
+    return [out_ll, image_octave]
 
 
-def ifwt2d_mra(lowest_scale, image_octabe, scaling_coef):
+def ifwt2d_mra(lowest_scale, image_octave, scaling_coef):
     """ 2次元高速ウェーブレット逆変換による多重解像度再構成 """
     # 先頭から取り出しつつ逐次再構成
     reconstract = lowest_scale
-    for _, src_h in enumerate(image_octabe):
+    for _, src_h in enumerate(image_octave):
         src_hl, src_lh, src_hh = src_h
         reconstract = ifwt2d(reconstract, src_hl, src_lh, src_hh, scaling_coef)
     return reconstract
@@ -156,12 +156,12 @@ if __name__ == "__main__":
     # scal_coef = DAUBECHIES4_SCALING_COEF
 
     # 分解
-    ll, octabe = fwt2d_mra(original, MAX_LEVEL, scal_coef)
+    ll, octave = fwt2d_mra(original, MAX_LEVEL, scal_coef)
 
     # ピラミッド画像作成
     width = ll.shape[0]
     image_pyramid[0:width, 0:width] = _minmax_scale(ll, 255)
-    for _, h in enumerate(octabe):
+    for _, h in enumerate(octave):
         hl, lh, hh = h
         width = hl.shape[0]
         image_pyramid[0:width, width:2*width] = _minmax_scale(hl, 255)
@@ -169,7 +169,7 @@ if __name__ == "__main__":
         image_pyramid[width:2*width, width:2*width] = _minmax_scale(hh, 255)
 
     # 再構成
-    recon = ifwt2d_mra(ll, octabe, scal_coef)
+    recon = ifwt2d_mra(ll, octave, scal_coef)
 
     # 再構成誤差
     print('Reconstract RMSE:', np.linalg.norm(original - recon))
