@@ -1,12 +1,14 @@
-name: Build-Slide
+name: Build Slide
 
 on:
+  # 定期実行
+  schedule:
+    - cron: '0 0 * * *'
   # push/pull時に実行
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
   # 手動実行も可
   workflow_dispatch:
 
