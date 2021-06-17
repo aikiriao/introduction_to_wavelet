@@ -91,11 +91,15 @@
 }
 
 \title[ウェーブレットおきもち -- 導入と実装 --]{ウェーブレットおきもち\\-- 導入と実装 --}
-\author[aikiriao]{Available at: \qrcode[hyperlink,height=20mm]{https://speakerdeck.com/aikiriao/ueburetutookimotijiang-zuo}\\ Source: {\scriptsize \myurl{https://github.com/aikiriao/introduction_to_wavelet}}}
+\author[aikiriao]{aikiriao}
 \date{\today}
 
 \begin{document}
-\maketitle
+\begin{frame}[c]
+  \titlepage
+  \centering
+  Available at: \qrcode[hyperlink,height=20mm]{https://speakerdeck.com/aikiriao/ueburetutookimotijiang-zuo}\\ Source: {\scriptsize \myurl{https://github.com/aikiriao/introduction_to_wavelet}}
+\end{frame}
 
 \begin{frame}[c]
 \frametitle{もくじ}
@@ -119,10 +123,10 @@
     \frametitle{関数の内積}
     2関数$f,g$の内積を次で定める：
     \begin{align}
-        \innprod{f(x)}{g(x)} &:= \int_{a}^{b} f(x) \roverline{g(x)} \mathrm{d}x \label{eq:function_innerprod} \\
+        \innprod{f(\cdot)}{g(\cdot)} &:= \int_{a}^{b} f(x) \roverline{g(x)} \mathrm{d}x \label{eq:function_innerprod} \\
         \roverline{g(x)} &: \text{$g(x)$の複素共役} \nonumber
     \end{align}
-    積分範囲$[a,b]$は対象により変わる．積分変数を省略して$\innprod{f}{g}$とも書く．考え方は，有限次元ベクトルと同じ：
+    積分範囲$[a,b]$は対象により変わる．省略して$\innprod{f}{g}$とも書く．考え方は，有限次元ベクトルと同じ：
     \begin{align*}
         \innprod{\ve{v}}{\ve{w}} := \sum_{n} (\ve{v})_{n} \roverline{(\ve{w})_{n}}
     \end{align*}
@@ -175,7 +179,7 @@
     \frametitle{関数空間の例：フーリエ級数}
     フーリエ係数$c_{n}$は$\exp$との内積の定数倍
     \begin{align}
-        c_{n} = \frac{1}{\sqrt{T}} \innprod{f(t)}{\frac{1}{\sqrt{T}}\exp(jn\omega t)}
+        c_{n} = \frac{1}{\sqrt{T}} \innprod{f(\cdot)}{\frac{1}{\sqrt{T}}\exp(jn\omega \cdot)}
     \end{align}
     だから，$n\omega$の周波数成分との類似度に相当
     \begin{figure}
@@ -284,7 +288,7 @@
     関数$f$の連続ウェーブレット変換$F(a,b)$は，$f$と$\psi_{a,b}$の内積によって得られる：
     \begin{align}
         F(a,b) &:= \int_{-\infty}^{\infty} f(t) \roverline{\psi_{a,b}(t)} \mathrm{d}t \\
-        &= \innprod{f(t)}{\psi_{a,b}(t)} \nonumber
+        &= \innprod{f(\cdot)}{\psi_{a,b}(\cdot)} \nonumber
     \end{align}
     変換先はスケール$a$とシフト$b$の2軸（スケログラムという）
     \begin{itemize}
@@ -380,7 +384,7 @@
             \begin{itemize}
                 \item[M\ref{itm:mra1}お気持ち] スケーリング関数$\phi$は整数シフトに関して正規直交基底となることを要求：
                     \begin{align*}
-                        \innprod{\phi(t - n)}{\phi(t - m)} = \delta_{nm}
+                        \innprod{\phi(\cdot - n)}{\phi(\cdot - m)} = \delta_{nm}
                     \end{align*}
                     (M\ref{itm:mra1})が成立すれば，任意の$m,p,q \in \mathbb{Z}$に対し，
                     \footnotesize
@@ -440,7 +444,7 @@
         \item $a,b \in \mathbb{Z}$に対して，
             \small
             \begin{align*}
-                & \innprod{\phi_{H}(t-a)}{\phi_{H}(t-b)} = \int_{-\infty}^{\infty} \phi_{H}(t-a) \roverline{\phi_{H}(t-b)} \mathrm{d} t \\
+                & \innprod{\phi_{H}(\cdot-a)}{\phi_{H}(\cdot-b)} = \int_{-\infty}^{\infty} \phi_{H}(t-a) \roverline{\phi_{H}(t-b)} \mathrm{d} t \\
                 &= \int_{-\infty}^{\infty} \phi_{H}(s) \phi_{H}(s+a-b) \mathrm{d} s \quad (s = t - a) \\
                 &= \delta_{ab}
             \end{align*}
@@ -495,7 +499,7 @@
         \item \small
             $\displaystyle\lim_{m\to\infty} \phi_{Hm,0}(t) = \delta(t)$（$\delta(t)$：インパルス関数）の観察から，$\displaystyle\lim_{m\to\infty}V_{m}$はインパルス関数を時間シフトした集合となる．任意の$f \in L_{2}(\mathbb{R})$，$s \in \mathbb{R}$に対して$\delta(t - s) \in \displaystyle\lim_{m\to\infty}V_{m}$が存在して，
             \begin{align*}
-                \innprod{f(t)}{\delta(t - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
+                \innprod{f(\cdot)}{\delta(\cdot - s)} = \int_{-\infty}^{\infty} f(t) \delta(t - s) \mathrm{d} t = f(s)
             \end{align*}
             だから，$f \in \displaystyle\lim_{m\to\infty}V_{m}$で$L_{2}(\mathbb{R}) \subset \displaystyle\lim_{m\to\infty}V_{m}$．一方，$\phi_{Hm,n} \in L_{2}(\mathbb{R})$だから$L_{2}(\mathbb{R})\supset \displaystyle\lim_{m\to\infty}V_{m}$．従って，$\displaystyle\lim_{m\to\infty}V_{m} = L_{2}(\mathbb{R})$．
             \normalsize
@@ -1137,7 +1141,7 @@
     \scriptsize
     （証明）収束定理より任意のフーリエ級数展開可能な関数を表現可能だから，基底系をなすことは示されている．次に直交性を示す．$n,m \in \mathbb{Z}$に対して1周期分の内積をとると，
     \begin{align*}
-        & \innprod{\frac{1}{\sqrt{T}}\exp(jn\omega t)}{\frac{1}{\sqrt{T}}\exp(jm\omega t)} = \frac{1}{T} \int_{-T/2}^{T/2} \exp(jn\omega t) \exp(-jm\omega t) \mathrm{d}t \\
+        & \innprod{\frac{1}{\sqrt{T}}\exp(jn\omega \cdot)}{\frac{1}{\sqrt{T}}\exp(jm\omega \cdot)} = \frac{1}{T} \int_{-T/2}^{T/2} \exp(jn\omega t) \exp(-jm\omega t) \mathrm{d}t \\
         &= \frac{1}{T} \left[ \frac{\exp\left\{ j(n - m)2\pi t / T \right\}}{j(n - m)2\pi/T} \right]_{-T/2}^{T/2} \quad (\because \omega = 2\pi / T) \\
         &= \frac{1}{\pi} \frac{\exp\left\{ j(n - m)\pi \right\} - \exp\left\{ -j(n - m)\pi \right\}}{j2(n - m)} = \frac{1}{\pi} \frac{\sin\left\{ (n - m) \pi \right\}}{n - m} \quad \text{（$\because$ オイラーの公式）} \\
         &= \delta_{nm}  \quad \text{（$\delta$：クロネッカーのデルタ）}
@@ -1151,11 +1155,11 @@
 \begin{frame}[c]
     \frametitle{三角関数の完全性}
     \scriptsize
-    最後に，これ以外の基底はないことを背理法により示す．「$\left\{ \exp(jn\omega t) | n \in \mathbb{Z} \right\}$の全てに直交する連続関数基底$h(t)$が存在する」と仮定する．仮定により$\innprod{h(t)}{\exp(jn\omega t)} = 0$が成立するが，$h(t) = 0$は空間を生成しないゼロベクトルのため，$h(t) \neq 0$で考える．
+    最後に，これ以外の基底はないことを背理法により示す．「$\left\{ \exp(jn\omega t) | n \in \mathbb{Z} \right\}$の全てに直交する連続関数基底$h(t)$が存在する」と仮定する．仮定により$\innprod{h(\cdot)}{\exp(jn\omega \cdot)} = 0$が成立するが，$h(t) = 0$は空間を生成しないゼロベクトルのため，$h(t) \neq 0$で考える．
     \\~\
     $h(t)$のフーリエ級数展開を考える．$n$次のフーリエ係数は，
     \begin{align*}
-        c_{n} &= \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} h(t) \exp(-jn\omega t) \mathrm{d} t = \frac{1}{T} \innprod{h(t)}{\exp(jn\omega t)} = 0 \quad \text{（$\because$ $h(t)$の仮定）}
+        c_{n} &= \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} h(t) \exp(-jn\omega t) \mathrm{d} t = \frac{1}{T} \innprod{h(\cdot)}{\exp(jn\omega \cdot)} = 0 \quad \text{（$\because$ $h(t)$の仮定）}
     \end{align*}
     だから，$h(t)$の$N$次までのフーリエ級数近似$S_{N}(t)$は，
     \begin{align*}
@@ -1267,7 +1271,7 @@
     \scriptsize
     （証明）1.は，任意の$n,m \in \mathbb{Z}$に対して，
     \begin{align*}
-        \innprod{f(t - n)&}{g(t - m)} = \int_{-\infty}^{\infty} f(t - n) \roverline{g(t - m)} \mathrm{d} t \\
+        \innprod{f(\cdot - n)&}{g(\cdot - m)} = \int_{-\infty}^{\infty} f(t - n) \roverline{g(t - m)} \mathrm{d} t \\
         &= \frac{1}{2\pi} \int_{-\infty}^{\infty} \ft{f(t - n)} \roverline{\ft{g(t - m)}} \mathrm{d} \omega \quad \text{（$\because$ パーセバルの等式）} \\
         &= \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega)\exp(-jn\omega) \roverline{G(\omega)\exp(-jm\omega)} \mathrm{d} \omega \quad \text{（$\because$ 時間シフトのフーリエ変換）} \\
         &= \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega)\roverline{G(\omega)} \exp[-j(n-m)\omega] \mathrm{d} \omega \\
@@ -1283,14 +1287,14 @@
     \scriptsize
     2.は，1.の証明において$f=g$とすれば，
     \begin{align*}
-        \innprod{f(t - n)&}{f(t - m)} = \int_{-\infty}^{\infty} f(t - n) \roverline{f(t - m)} \mathrm{d} t \\
+        \innprod{f(\cdot - n)&}{f(\cdot - m)} = \int_{-\infty}^{\infty} f(t - n) \roverline{f(t - m)} \mathrm{d} t \\
         &= \frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega)\roverline{F(\omega)} \exp[-j(n-m)\omega] \mathrm{d} \omega \\
         &= \frac{1}{2\pi} \int_{-\pi}^{\pi} \left\{ \sum_{k} |F(\omega + 2\pi k)|^{2} \right\} \exp[-j(n-m)\omega] \mathrm{d} \omega \\
         &= \delta_{nm}
     \end{align*}
     となり，この等式は$\sum_{k} |F(\omega + 2\pi k)|^{2} = 1$のとき，かつそのときに限り成立する．実際，
     \begin{align*}
-        \innprod{f(t - n)}{f(t - m)} &= \frac{1}{2\pi} \int_{-\pi}^{\pi} \exp[-j(n-m)\omega] \mathrm{d} \omega = \frac{1}{2\pi} \left[ -\frac{\exp[-j(n-m)\omega]}{j(n-m)} \right]_{-\pi}^{\pi} \\
+        \innprod{f(\cdot - n)}{f(\cdot - m)} &= \frac{1}{2\pi} \int_{-\pi}^{\pi} \exp[-j(n-m)\omega] \mathrm{d} \omega = \frac{1}{2\pi} \left[ -\frac{\exp[-j(n-m)\omega]}{j(n-m)} \right]_{-\pi}^{\pi} \\
         &= \frac{1}{2\pi} \left[ -\frac{\exp[-j(n-m)\omega]}{j(n-m)} \right]_{-\pi}^{\pi} = \frac{1}{\pi} \frac{\sin\left\{ (n-m) \pi \right\} }{n-m}
     \end{align*}
     から，$n=m$のときと$n\neq m$のときで場合分けすれば確認できる（$n=m$のときは$x=n-m$として$x\to0$を考える）．よって，2.は示された．
