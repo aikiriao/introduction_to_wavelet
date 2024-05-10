@@ -21,7 +21,7 @@ def _minmax_scale(vec, maxscale):
     minval = np.min(vec)
     maxval = np.max(vec)
     # ゼロ除算対策のため、非ゼロ要素だけ除算
-    div = np.divide(vec - minval, maxval - minval, where=((vec - minval) != 0))
+    div = np.divide(vec - minval, maxval - minval, where=(vec - minval) != 0)
     return maxscale * div
 
 
