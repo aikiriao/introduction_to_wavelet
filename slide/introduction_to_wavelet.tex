@@ -42,9 +42,9 @@
 \newtheorem{mycorollary}{系}
 
 % 引用
-\usepackage[backend=bibtex, sorting=none]{biblatex}
+\usepackage[sorting=none]{biblatex}
 \usepackage{hyperref}
-\addbibresource{references}
+\addbibresource{references.bib}
 \newcommand{\myhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
 \newcommand{\myurl}[1]{\color{blue}{\url{#1}}}%
 \AtBeginBibliography{\scriptsize}
@@ -1690,11 +1690,12 @@
 \end{frame}
 
 \begin{frame}[c]
-    \frametitle{不確定性原理}
+    \frametitle{不確定性原理の例}
     \begin{itemize}
-        \item[現象1] 短時間フーリエ変換でより広い時間情報を得ようとして窓幅を大きく取ると($\Delta t$：小)周波数分解能が小さく（狭く）($\Delta \omega$：大)なる
-        \item[現象2] ウェーブレット変換でスケール$a$を小さく取ると細かい振動を捉えられる（$\Delta \omega$：小）が，時間幅は狭く（$\Delta t$：大）なる
-        \item[現象3] フーリエ変換は周波数分解能が最大($\Delta \omega \to 0$)だが，時間分解能は最悪($\Delta t \to \infty$)
+        \item[例1] 短時間フーリエ変換でより広い周波数情報を得ようとして窓幅を大きく取ると($\Delta t$：大)周波数分解能（精度）が向上($\Delta \omega$：小)する
+        \item[例2] ウェーブレット変換でスケール$a$を小さく取ると細かい振動を捉えられる($\Delta t$：小)が，長周期成分の分析は荒く($\Delta \omega$：大)なる
+        \item[例3] フーリエ変換は周波数分解能が最大($\Delta \omega \to 0$)だが，時間分解能は最悪($\Delta t \to \infty$)
+        \item[例4] デジタル信号を1点だけ観測した($\Delta t$：小)とき，振動の情報は全く得られない($\Delta \omega$：大)
     \end{itemize}
 \end{frame}
 
@@ -1704,7 +1705,7 @@
     \begin{figure}
         \includegraphics[width=60mm]{./figs/heisenburg_box.png}
     \end{figure}
-    この図に現れる矩形領域をハイゼンベルクの箱と言う．
+    矩形領域の面積は$\frac{1}{2}$より大きくなる．矩形領域をハイゼンベルクの箱と言う．
 \end{frame}
 
 \subsection{不確定性原理の証明} 
